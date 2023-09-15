@@ -4,13 +4,13 @@ import lombok.Data;
 
 @Data
 public class LyUserOrgan {
-    private Integer id;
+    private String id;
 
     private String name;
 
-    private Integer fatherId;
+    private String fatherId;
 
-    public LyUserOrgan(Integer id, String name, Integer fatherId) {
+    public LyUserOrgan(String id, String name, String fatherId) {
         this.id = id;
         this.name = name;
         this.fatherId = fatherId;
@@ -20,11 +20,15 @@ public class LyUserOrgan {
         super();
     }
 
-    public Integer getId() {
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -32,15 +36,11 @@ public class LyUserOrgan {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
-
-    public Integer getFatherId() {
+    public String getFatherId() {
         return fatherId;
     }
 
-    public void setFatherId(Integer fatherId) {
+    public void setFatherId(String fatherId) {
         this.fatherId = fatherId;
     }
 }

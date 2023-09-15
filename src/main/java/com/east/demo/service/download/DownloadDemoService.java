@@ -113,8 +113,8 @@ public class DownloadDemoService {
     private List<LyUserOrgan> createExcelData() {
         ArrayList<LyUserOrgan> arrayList = new ArrayList();
 
-        arrayList.add(new LyUserOrgan(1, "name1", 1));
-        arrayList.add(new LyUserOrgan(2, "name2", 2));
+        arrayList.add(new LyUserOrgan("1", "name1", "1"));
+        arrayList.add(new LyUserOrgan("2", "name2", "2"));
 
         return arrayList;
     }

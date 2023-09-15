@@ -10,12 +10,12 @@ import lombok.Data;
  */
 @Data
 public class DownloadHeader {
-    @ExcelProperty({"顶格", "顶格", "两格"})
-    private Integer id;
+    @ExcelProperty(index = 0)
+    private String id;
 
-    @ExcelProperty({"顶格", "四联", "四联"})
+    @ExcelProperty(index = 1)
     private String name;
 
-    @ExcelProperty({"顶格"})
-    private Integer fatherId;
+    @ExcelProperty(index = 2)
+    private String fatherId;
 }
