@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -20,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 @Api(tags = {"测试网关使用的相关接口"})
 @RequestMapping("/demo/gateway")
+@RestController
 public class GatewayDemoController {
     @Autowired
     GatewayDemoService gatewayDemoService;

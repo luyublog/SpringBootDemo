@@ -27,7 +27,7 @@ public class GatewayDemoService {
         parseExcel(multipartFile);
 //        log.info("excel数据为:{}", excelInfo.get(0).toString());
 
-        return "ok";
+        return json;
     }
 
     /**
