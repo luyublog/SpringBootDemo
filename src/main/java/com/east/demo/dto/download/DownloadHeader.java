@@ -1,6 +1,5 @@
 package com.east.demo.dto.download;
 
-import com.alibaba.excel.annotation.ExcelProperty;
 import lombok.Data;
 
 /**
@@ -10,12 +9,9 @@ import lombok.Data;
  */
 @Data
 public class DownloadHeader {
-    @ExcelProperty(index = 0)
     private String id;
 
-    @ExcelProperty(index = 1)
     private String name;
 
-    @ExcelProperty(index = 2)
     private String fatherId;
 }

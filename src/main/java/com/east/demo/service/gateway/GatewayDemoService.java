@@ -1,17 +1,14 @@
 package com.east.demo.service.gateway;
 
-import com.alibaba.excel.EasyExcel;
 import com.east.demo.dto.download.DownloadHeader;
-import com.east.demo.service.common.DemoDataListener;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
- * @description:
+ * 配合gateway上相关逻辑的接口
  * @author: east
  * @date: 2023/9/15
  */
@@ -36,12 +33,12 @@ public class GatewayDemoService {
      * @param multipartFile file
      */
     private void parseExcel(MultipartFile multipartFile) {
-        try {
-            EasyExcel.read(multipartFile.getInputStream(), DownloadHeader.class, new DemoDataListener())
-                    .sheet().doRead();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+//        try {
+//            EasyExcel.read(multipartFile.getInputStream(), DownloadHeader.class, new DemoDataListener())
+//                    .sheet().doRead();
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
     }
 
     public void save(List<DownloadHeader> cachedDataList) {
