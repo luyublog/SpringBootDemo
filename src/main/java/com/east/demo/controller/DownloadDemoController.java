@@ -1,6 +1,6 @@
 package com.east.demo.controller;
 
-import com.east.demo.service.download.DownloadDemoService;
+import com.east.demo.service.commonrecord.download.DownloadDemoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

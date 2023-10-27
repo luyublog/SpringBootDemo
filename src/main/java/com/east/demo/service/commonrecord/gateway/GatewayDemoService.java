@@ -1,4 +1,4 @@
-package com.east.demo.service.gateway;
+package com.east.demo.service.commonrecord.gateway;
 
 import com.east.demo.dto.download.DownloadHeader;
 import lombok.extern.slf4j.Slf4j;

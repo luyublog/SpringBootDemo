@@ -1,4 +1,4 @@
-package com.east.demo.service.download;
+package com.east.demo.service.commonrecord.download;
 
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;

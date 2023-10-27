@@ -1,6 +1,6 @@
 package com.east.demo.controller.gateway;
 
-import com.east.demo.service.gateway.GatewayDemoService;
+import com.east.demo.service.commonrecord.gateway.GatewayDemoService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
