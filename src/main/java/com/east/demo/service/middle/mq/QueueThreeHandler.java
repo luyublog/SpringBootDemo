@@ -13,32 +13,22 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 /**
- * 直接队列mq处理器
+ * 队列2处理逻辑
  *
  * @author: east
- * @date: 2023/10/27
+ * @date: 2023/10/28
  */
 
 @Slf4j
-@RabbitListener(queues = RabbitConst.DIRECT_MODE_QUEUE_ONE)
+@RabbitListener(queues = RabbitConst.QUEUE_THREE)
 @Component
-public class DirectQueueOneHandler {
-    /**
-     * 如果 spring.rabbitmq.listener.direct.acknowledge-mode: auto，则可以用这个方式，会自动ack
-     */
-    // @RabbitHandler
-    public void directHandlerAutoAck(MessageStruct message) {
-        log.info("直接队列处理器，接收消息：{}", JSONUtil.toJsonStr(message));
-    }
-
+public class QueueThreeHandler {
     @RabbitHandler
     public void directHandlerManualAck(MessageStruct messageStruct, Message message, Channel channel) {
         //  如果手动ACK,消息会被监听消费,但是消息在队列中依旧存在,如果 未配置 acknowledge-mode 默认是会在消费完毕后自动ACK掉
         final long deliveryTag = message.getMessageProperties().getDeliveryTag();
         try {
-            // 放在这里测试消费者
-//            int temp=1/0;
-            log.info("直接队列1，手动ACK，接收消息：{}", JSONUtil.toJsonStr(messageStruct));
+            log.info("队列3，手动ACK，接收消息：{}", JSONUtil.toJsonStr(messageStruct));
             // 通知 MQ 消息已被成功消费,可以ACK了
             channel.basicAck(deliveryTag, false);
         } catch (Exception e) {

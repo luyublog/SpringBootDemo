@@ -36,17 +36,17 @@ public class RabbitConst {
     /**
      * 路由1
      */
-    public static final String TOPIC_ROUTING_KEY_ONE = "queue.#";
+    public static final String TOPIC_ROUTING_KEY_SUFFIX_MORE = "key.#";
 
     /**
      * 路由2
      */
-    public static final String TOPIC_ROUTING_KEY_TWO = "*.queue";
+    public static final String TOPIC_ROUTING_KEY_PREFIX = "*.key";
 
     /**
      * 路由3
      */
-    public static final String TOPIC_ROUTING_KEY_THREE = "3.queue";
+    public static final String TOPIC_ROUTING_KEY_THREE = "3.key";
 
     /**
      * 延迟队列
