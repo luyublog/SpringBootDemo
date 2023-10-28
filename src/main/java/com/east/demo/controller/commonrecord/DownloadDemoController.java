@@ -1,4 +1,4 @@
-package com.east.demo.controller;
+package com.east.demo.controller.commonrecord;
 
 import com.east.demo.service.commonrecord.download.DownloadDemoService;
 import io.swagger.annotations.Api;
@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * @description: 涉及下载相关demo
+ * 涉及下载相关demo
  * @author: east
  * @date: 2023/9/13
  */
