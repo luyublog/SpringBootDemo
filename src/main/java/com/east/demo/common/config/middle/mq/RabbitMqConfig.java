@@ -1,4 +1,4 @@
-package com.east.demo.common.config.midlle.mq;
+package com.east.demo.common.config.middle.mq;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.*;

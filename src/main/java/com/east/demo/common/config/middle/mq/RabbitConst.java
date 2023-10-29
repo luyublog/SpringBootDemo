@@ -1,4 +1,4 @@
-package com.east.demo.common.config.midlle.mq;
+package com.east.demo.common.config.middle.mq;
 
 /**
  * rabbitMq常量类
