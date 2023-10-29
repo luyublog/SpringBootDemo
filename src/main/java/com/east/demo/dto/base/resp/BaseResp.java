@@ -1,9 +1,8 @@
-package com.east.demo.dto.resp;
+package com.east.demo.dto.base.resp;
 
 import com.east.demo.common.enums.ErrorEnum;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.poi.ss.formula.functions.T;
 
 /**
  * Description:
@@ -11,7 +10,7 @@ import org.apache.poi.ss.formula.functions.T;
  */
 @Data
 @NoArgsConstructor
-public class BaseResp {
+public class BaseResp<T> {
     private String respCode;
     private String respMsg;
     private T data;
@@ -24,6 +23,16 @@ public class BaseResp {
     public BaseResp(String respCode, String respMsg) {
         this.respCode = respCode;
         this.respMsg = respMsg;
+    }
+
+    public BaseResp(ErrorEnum errorEnum, T data) {
+        this.respCode = errorEnum.getCode();
+        this.respMsg = errorEnum.getMsg();
+        this.data = data;
+    }
+
+    public static <T> BaseResp<T> ok(T data) {
+        return new BaseResp<T>(ErrorEnum.SUCCESS, data);
     }
 }
 

@@ -3,7 +3,7 @@ package com.east.demo.common.exception;
 import cn.hutool.core.net.URLEncodeUtil;
 import cn.hutool.json.JSONUtil;
 import com.east.demo.common.enums.ErrorEnum;
-import com.east.demo.dto.resp.BaseResp;
+import com.east.demo.dto.base.resp.BaseResp;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

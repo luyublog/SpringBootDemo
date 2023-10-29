@@ -64,8 +64,8 @@ public class LogAspect {
         }
         hashMapThreadLocal.get().put("startTime", System.currentTimeMillis());
 
-        log.info("接口：{} 接收到新的请求", Objects.isNull(annotation) ? "方法无描述注解" : annotation.value());
-        log.info("接口uri: {}", request.getRequestURI());
+        log.info("接口：[{}] 接收到新的请求", Objects.isNull(annotation) ? "方法无描述注解" : annotation.value());
+        log.info("接口uri: [{}]", request.getRequestURI());
         // todo 仅打印JSON报文
         log.info("{}类型 请求参数：{}", request.getMethod(), JSONUtil.toJsonStr(getNameAndValue(joinPoint)));
 
@@ -101,6 +101,8 @@ public class LogAspect {
 
     /**
      * 获取方法参数名和参数值
+     * 这里会以方法的形参：实际参数的格式打印，例如：{"request":{"demo":"test"}}
+     * 其中request为@RequestBody上的参数名，{"demo":"test"}为具体报文。其实没必要，直接打印JoinPoint里面的args感觉就行了
      *
      * @param joinPoint 切点
      * @return 参数
@@ -120,7 +122,7 @@ public class LogAspect {
             return new HashMap<>();
         }
         Map<String, Object> map = new HashMap<>();
-        for (int i = 0; i < names.length - 1; i++) {
+        for (int i = 0; i < names.length; i++) {
             map.put(names[i], args[i]);
         }
         return map;
