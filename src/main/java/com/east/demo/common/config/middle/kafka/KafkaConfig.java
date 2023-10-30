@@ -1,6 +1,7 @@
 package com.east.demo.common.config.middle.kafka;
 
 import lombok.AllArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -21,6 +22,7 @@ import org.springframework.kafka.listener.ContainerProperties;
 @EnableConfigurationProperties({KafkaProperties.class})
 @EnableKafka
 @AllArgsConstructor
+@ConditionalOnProperty("spring.kafka.enable")
 public class KafkaConfig {
     private final KafkaProperties kafkaProperties;
 
