@@ -2,14 +2,12 @@ package com.east.demo.common.config.middle.mq;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.*;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import javax.annotation.PostConstruct;
 
 /**
  * <p>
@@ -24,17 +22,48 @@ import javax.annotation.PostConstruct;
 @ConditionalOnProperty("spring.rabbitmq.enable")
 public class RabbitMqConfig extends RabbitAutoConfiguration {
     // 自动配置的template
-    @Autowired
-    RabbitTemplate rabbitTemplate;
+//    @Autowired
+//    RabbitTemplate rabbitTemplate;
 
-    @PostConstruct
-    public void modifyRabbitTemplate() {
+//    @PostConstruct
+//    public void modifyRabbitTemplate(ConnectionFactory connectionFactory) {
+//        log.info("开始创建不同的rabbitMq发送实例");
+//        createRabbitMqTest1(connectionFactory);
+//        createRabbitMqTest2(connectionFactory);
+//    }
+
+    @Bean(name = "myRabbitTemplateTest1")
+    public RabbitTemplate createRabbitMqTest1(ConnectionFactory connectionFactory) {
+        RabbitTemplate rabbitTemplateTest1 = new RabbitTemplate(connectionFactory);
         // 设置一些参数.不能放构造函数内，不然rabbitTemplate也没初始化
-        rabbitTemplate.setMandatory(true);
-        rabbitTemplate.setConfirmCallback((correlationData, ack, cause)
-                -> log.info("消息发送成功:correlationData({}),ack({}),cause({})", correlationData, ack, cause));
-        rabbitTemplate.setReturnCallback((message, replyCode, replyText, exchange, routingKey)
-                -> log.info("消息丢失:exchange({}),route({}),replyCode({}),replyText({}),message:{}", exchange, routingKey, replyCode, replyText, message));
+        rabbitTemplateTest1.setMandatory(true);
+        rabbitTemplateTest1.setConfirmCallback((correlationData, ack, cause)
+                -> log.info("消费者1：消息发送成功:correlationData({}),ack({}),cause({})", correlationData, ack, cause));
+        rabbitTemplateTest1.setReturnsCallback(returnedMessage
+                -> {
+            log.info("消费者1：消息丢失:exchange({}),routingKey({}),replyCode({}),replyText({}),message:{}",
+                    returnedMessage.getExchange(), returnedMessage.getRoutingKey(), returnedMessage.getReplyCode(),
+                    returnedMessage.getReplyText(), returnedMessage.getMessage());
+            log.info("消费者1：消息丢失后处理逻辑");
+        });
+        return rabbitTemplateTest1;
+    }
+
+    @Bean(name = "myRabbitTemplateTest2")
+    public RabbitTemplate createRabbitMqTest2(ConnectionFactory connectionFactory) {
+        RabbitTemplate rabbitTemplateTest = new RabbitTemplate(connectionFactory);
+        // 设置一些参数.不能放构造函数内，不然rabbitTemplate也没初始化
+        rabbitTemplateTest.setMandatory(true);
+        rabbitTemplateTest.setConfirmCallback((correlationData, ack, cause)
+                -> log.info("消费者2：消息发送成功:correlationData({}),ack({}),cause({})", correlationData, ack, cause));
+        rabbitTemplateTest.setReturnsCallback(returnedMessage
+                -> {
+            log.info("消费者2：消息丢失:exchange({}),routingKey({}),replyCode({}),replyText({}),message:{}",
+                    returnedMessage.getExchange(), returnedMessage.getRoutingKey(), returnedMessage.getReplyCode(),
+                    returnedMessage.getReplyText(), returnedMessage.getMessage());
+            log.info("消费者2：消息丢失后处理逻辑");
+        });
+        return rabbitTemplateTest;
     }
 
     /**

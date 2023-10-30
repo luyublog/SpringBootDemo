@@ -12,8 +12,17 @@ import org.springframework.boot.test.context.SpringBootTest;
 //@RunWith(SpringRunner.class)
 @SpringBootTest
 class DirectQueueOneHandlerTest {
-    @Autowired
+    // note:这里用Qualifier会注入失败;原因...待跟踪
+
+    @Autowired()
     private RabbitTemplate rabbitTemplate;
+
+    // autowired规则:首先根据类型去容器中找出所有匹配的Bean，如果只有一个就直接注入即可，
+    // 如果有多个则取出来放到一个Map中（key为beanName,value为具体的bean），
+    // 然后去查找Map中有@Primary的bean进行返回；如果没有，再去找Map中优先级最大的Bean进行返回；
+    // 如果也没有，则根据字段名去Map中匹配key进行返回。
+    @Autowired()
+    private RabbitTemplate myRabbitTemplateTest2;
 
     @BeforeEach
     void setUp() {
@@ -35,7 +44,7 @@ class DirectQueueOneHandlerTest {
      */
     @Test
     public void sendFanout() {
-        rabbitTemplate.convertAndSend(RabbitConst.FANOUT_MODE_QUEUE, "", new MessageStruct("fanout message"));
+        myRabbitTemplateTest2.convertAndSend(RabbitConst.FANOUT_MODE_QUEUE, "", new MessageStruct("fanout message"));
     }
 
     /**
