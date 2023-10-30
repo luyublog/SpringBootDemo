@@ -10,10 +10,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
-import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
@@ -48,7 +48,15 @@ public class LogAspect {
     public void myLog() {
     }
 
-    @Before("myLog()")
+
+    /**
+     * 日志打印的两种方法，
+     * 1.before, afterReturn
+     * 2.around
+     *
+     * @param joinPoint
+     */
+//    @Before("myLog()")
     // 这里用了ProceedingJoinPoint作为参数后，myLog就升级成了ProceedingJoinPoint，
     // 但是ProceedingJoinPoint只能在around使用，所以就会报错ProceedingJoinPoint is only supported for around advice
     // public void aroundLog(ProceedingJoinPoint joinPoint) {
@@ -72,7 +80,7 @@ public class LogAspect {
 
     }
 
-    @AfterReturning(pointcut = "myLog()", returning = "methodResult")
+    //    @AfterReturning(pointcut = "myLog()", returning = "methodResult")
     public void after(JoinPoint joinPoint, Object methodResult) {
         // 开始打印请求日志
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
@@ -99,6 +107,39 @@ public class LogAspect {
         log.info("接口耗时：{} ms", System.currentTimeMillis() - startTime);
         log.info("调用方IP,OS,BROWSER：{},{},{}", getIp(request), userAgent.getOs().toString(), userAgent.getBrowser().toString());
         log.info("===========接口调用结束================");
+    }
+
+    @Around("myLog()")
+    public Object around(ProceedingJoinPoint joinPoint) {
+        // 开始打印请求日志
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = Objects.requireNonNull(attributes).getRequest();
+        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+        Method method = signature.getMethod();
+        ApiOperation annotation = method.getAnnotation(ApiOperation.class);
+        long startTime = System.currentTimeMillis();
+
+        log.info("===========接收到新的请求=============");
+        log.info("接口：[{}] ", Objects.isNull(annotation) ? "方法无描述注解" : annotation.value());
+        log.info("接口uri: [{}]", request.getRequestURI());
+        // todo 仅打印JSON报文
+        log.info("{}类型 请求参数：{}", request.getMethod(), JSONUtil.toJsonStr(getNameAndValue(joinPoint)));
+
+        Object methodResult = null;
+        try {
+            methodResult = joinPoint.proceed();
+        } catch (Throwable e) {
+            log.error("接口异常", e);
+            throw new RuntimeException(e);
+        } finally {
+            // 解析用户浏览器相关信息
+            UserAgent userAgent = UserAgentParser.parse(request.getHeader("User-Agent"));
+            log.info("响应结果：{}", JSONUtil.toJsonStr(JSONUtil.toJsonStr(methodResult)));
+            log.info("接口耗时：{} ms", System.currentTimeMillis() - startTime);
+            log.info("调用方IP,OS,BROWSER：{},{},{}", getIp(request), userAgent.getOs().toString(), userAgent.getBrowser().toString());
+            log.info("===========接口调用结束================");
+        }
+        return methodResult;
     }
 
     /**
