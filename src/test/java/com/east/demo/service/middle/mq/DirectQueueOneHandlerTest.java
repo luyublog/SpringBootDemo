@@ -21,6 +21,7 @@ class DirectQueueOneHandlerTest {
     // 如果有多个则取出来放到一个Map中（key为beanName,value为具体的bean），
     // 然后去查找Map中有@Primary的bean进行返回；如果没有，再去找Map中优先级最大的Bean进行返回；
     // 如果也没有，则根据字段名去Map中匹配key进行返回。
+    // ref: https://www.cnblogs.com/fallmwu/p/14267939.html
     @Autowired()
     private RabbitTemplate myRabbitTemplateTest2;
 
