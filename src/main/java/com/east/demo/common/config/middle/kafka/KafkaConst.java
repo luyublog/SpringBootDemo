@@ -16,5 +16,5 @@ public class KafkaConst {
     /**
      * Topic 名称
      */
-    public static final String TOPIC_TEST = "topic1";
+    public static final String TOPIC_TEST = "messages";
 }
