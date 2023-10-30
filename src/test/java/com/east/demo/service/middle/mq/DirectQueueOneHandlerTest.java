@@ -13,9 +13,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class DirectQueueOneHandlerTest {
     // note:这里用Qualifier会注入失败;原因...待跟踪
-
     @Autowired()
-    private RabbitTemplate rabbitTemplate;
+    private RabbitTemplate myRabbitTemplateTest1;
 
     // autowired规则:首先根据类型去容器中找出所有匹配的Bean，如果只有一个就直接注入即可，
     // 如果有多个则取出来放到一个Map中（key为beanName,value为具体的bean），
@@ -37,7 +36,9 @@ class DirectQueueOneHandlerTest {
 
     @Test
     void directHandlerManualAck() {
-        rabbitTemplate.convertAndSend(RabbitConst.DIRECT_MODE_QUEUE_ONE, new MessageStruct("direct message"));
+        // 使用rabbitTemplate则不会有自定义回调和失败处理
+//        rabbitTemplate.convertAndSend(RabbitConst.DIRECT_MODE_QUEUE_ONE, new MessageStruct("direct message"));
+        myRabbitTemplateTest1.convertAndSend(RabbitConst.DIRECT_MODE_QUEUE_ONE, new MessageStruct("direct message"));
     }
 
     /**
@@ -54,7 +55,7 @@ class DirectQueueOneHandlerTest {
      */
     @Test
     public void sendTopic1() {
-        rabbitTemplate.convertAndSend(
+        myRabbitTemplateTest1.convertAndSend(
                 RabbitConst.TOPIC_MODE_QUEUE,
                 "key.aaa.bbb",
                 new MessageStruct("topic message with key.aaa.bbb"));
@@ -66,7 +67,7 @@ class DirectQueueOneHandlerTest {
      */
     @Test
     public void sendTopic2() {
-        rabbitTemplate.convertAndSend(RabbitConst.TOPIC_MODE_QUEUE,
+        myRabbitTemplateTest1.convertAndSend(RabbitConst.TOPIC_MODE_QUEUE,
                 "ccc.key",
                 new MessageStruct("topic message with ccc.key"));
     }
@@ -78,7 +79,7 @@ class DirectQueueOneHandlerTest {
      */
     @Test
     public void sendTopic3() {
-        rabbitTemplate.convertAndSend(
+        myRabbitTemplateTest1.convertAndSend(
                 RabbitConst.TOPIC_MODE_QUEUE,
                 "3.queue",
                 new MessageStruct("topic message with 3.key"));
@@ -93,7 +94,7 @@ class DirectQueueOneHandlerTest {
     void testTimeout() throws InterruptedException {
         // 放在这里测试生产者
 //        Thread.sleep(10*1000);
-        rabbitTemplate.convertAndSend(RabbitConst.DIRECT_MODE_QUEUE_ONE, new MessageStruct("direct message"));
+        myRabbitTemplateTest1.convertAndSend(RabbitConst.DIRECT_MODE_QUEUE_ONE, new MessageStruct("direct message"));
 
     }
 }
