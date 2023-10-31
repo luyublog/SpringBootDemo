@@ -24,10 +24,9 @@ public class DbBatchOperation {
     public <T> int insertBatch(List<T> infoList, BiFunction<SqlSession, T, Integer> function) {
         int batchSize = 1000;
 
-        SqlSession sqlSession = null;
-        try {
+//        SqlSession sqlSession = null;
+        try (SqlSession sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH, false)) {
             int i = 0;
-            sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH, false);
             for (T info : infoList) {
                 i++;
                 Integer apply = function.apply(sqlSession, info);

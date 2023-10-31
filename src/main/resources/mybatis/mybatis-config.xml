@@ -1,0 +1,32 @@
+<!--<?xml version="1.0" encoding="UTF-8" ?>-->
+<!--<!DOCTYPE configuration-->
+<!--        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"-->
+<!--        "http://mybatis.org/dtd/mybatis-3-config.dtd">-->
+<!--<configuration>-->
+<!--    <settings>-->
+<!--        <setting name="lazyLoadingEnabled" value="true"/>-->
+<!--        &lt;!&ndash; <setting name="aggressiveLazyLoading" value="false"/> &ndash;&gt;-->
+<!--    </settings>-->
+<!--&lt;!&ndash;    <typeAliases>&ndash;&gt;-->
+<!--&lt;!&ndash;        <typeAlias alias="role" type="com.gethin.po.Role"/>&ndash;&gt;-->
+<!--&lt;!&ndash;    </typeAliases>&ndash;&gt;-->
+<!--    <typeHandlers>-->
+<!--        <typeHandler jdbcType="CHAR" javaType="string" handler="com.east.demo.common.handler.MyStringHandler"/>-->
+<!--    </typeHandlers>-->
+<!--&lt;!&ndash;    &lt;!&ndash; 定义数据库的信息，默认使用development数据库构建环境 &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;    <environments default="development">&ndash;&gt;-->
+<!--&lt;!&ndash;        <environment id="development">&ndash;&gt;-->
+<!--&lt;!&ndash;            <transactionManager type="JDBC" />&ndash;&gt;-->
+<!--&lt;!&ndash;            <dataSource type="POOLED">&ndash;&gt;-->
+<!--&lt;!&ndash;                <property name="driver" value="com.oracle.jdbc.OracleDriver" />&ndash;&gt;-->
+<!--&lt;!&ndash;                <property name="url" value="${url}" />&ndash;&gt;-->
+<!--&lt;!&ndash;                <property name="username" value="dbuser" />&ndash;&gt;-->
+<!--&lt;!&ndash;                <property name="password" value="123456" />&ndash;&gt;-->
+<!--&lt;!&ndash;            </dataSource>&ndash;&gt;-->
+<!--&lt;!&ndash;        </environment>&ndash;&gt;-->
+<!--&lt;!&ndash;    </environments>&ndash;&gt;-->
+<!--    &lt;!&ndash; 定义映射器 &ndash;&gt;-->
+<!--    <mappers>-->
+<!--        <package name="com.gethin.mapper"/>-->
+<!--    </mappers>-->
+<!--</configuration>-->
