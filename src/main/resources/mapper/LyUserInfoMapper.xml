@@ -2,12 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.east.demo.persist.mapper.LyUserInfoMapper">
+    <resultMap id="BaseResultMap" type="com.east.demo.persist.entity.LyUserInfo">
+        <id column="EMPLOYEE_ID" javaType="Long" jdbcType="NUMERIC" property="employeeId"/>
+        <id column="FIRST_NAME" javaType="String" jdbcType="VARCHAR" property="firstName"/>
+        <id column="LAST_NAME" javaType="String" jdbcType="VARCHAR" property="lastName"/>
+        <id column="EMAIL" javaType="String" jdbcType="VARCHAR" property="email"/>
+        <id column="PHONE_NUMBER" javaType="String" jdbcType="VARCHAR" property="phoneNumber"/>
+        <id column="SALARY" javaType="Long" jdbcType="NUMERIC" property="salary"/>
+    </resultMap>
 
     <!-- 通过name查询 -->
     <select id="getByName" resultType="com.east.demo.persist.entity.LyUserInfo">
-        <![CDATA[
-        SELECT * FROM HR WHERE name = #{value} and rownum = 1
-        ]]>
+        SELECT *
+        FROM HR.EMPLOYEES
+        WHERE FIRST_NAME = #{value}
+          and rownum = 1
     </select>
 
 </mapper>

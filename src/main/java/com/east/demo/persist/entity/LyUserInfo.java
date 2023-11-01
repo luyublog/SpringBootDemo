@@ -14,9 +14,12 @@ import lombok.*;
 @Builder
 @ToString
 public class LyUserInfo {
-    private Long id;
-    private String name;
-    private Integer age;
+    private Long employeeId;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String phoneNumber;
+    //    private Integer age;
     private Double salary;
-    private Integer sex;
+//    private Integer sex;
 }

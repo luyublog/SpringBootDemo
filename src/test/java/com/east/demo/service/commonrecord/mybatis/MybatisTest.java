@@ -2,33 +2,35 @@ package com.east.demo.service.commonrecord.mybatis;
 
 import com.east.demo.persist.entity.LyUserInfo;
 import com.east.demo.persist.mapper.LyUserInfoMapper;
+import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * 详解mapper参数配置: https://cloud.tencent.com/developer/article/1551940
  */
-@SpringBootTest
+//@SpringBootTest
+//@Slf4j
 class MybatisTest {
-    @Autowired
+    //    @Autowired
     public SqlSessionFactory sqlSessionFactory;
 
     @BeforeEach
     void setUp() throws IOException {
-//        //指定mybatis全局配置文件
-//        String resource = "mybatis/mybatis-config.xml";
-//        //读取全局配置文件
-//        InputStream inputStream = Resources.getResourceAsStream(resource);
-//        //构建SqlSessionFactory对象
-//        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-//        this.sqlSessionFactory = sqlSessionFactory;
+        //指定mybatis全局配置文件
+        String resource = "mybatis/mybatis-config.xml";
+        //读取全局配置文件
+        InputStream inputStream = Resources.getResourceAsStream(resource);
+        //构建SqlSessionFactory对象
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+        this.sqlSessionFactory = sqlSessionFactory;
     }
 
     @AfterEach
@@ -40,7 +42,8 @@ class MybatisTest {
     public void getName() {
         try (SqlSession sqlSession = this.sqlSessionFactory.openSession(true);) {
             LyUserInfoMapper userMapper = sqlSession.getMapper(LyUserInfoMapper.class);
-            LyUserInfo userModel = userMapper.getByName("路人甲Java");
+            LyUserInfo userModel = userMapper.getByName("Jack");
+//            log.info(userModel.toString());
             System.out.println(userModel);
         }
     }
