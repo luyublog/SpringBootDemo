@@ -21,7 +21,8 @@
     </environments>
     <!-- 定义映射器 -->
     <mappers>
-        <package name="com.east.demo.persist.mapper"/>
+        <!--        <package name="com.east.demo.persist.mapper"/>-->
+        <mapper resource="mapper/LyUserInfoMapper.xml"/>
         <!--        <mapper class="LyUserInfoMapper"/>-->
     </mappers>
 </configuration>
