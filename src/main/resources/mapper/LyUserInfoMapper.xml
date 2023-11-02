@@ -18,5 +18,4 @@
         WHERE FIRST_NAME = #{value}
           and rownum = 1
     </select>
-
 </mapper>
