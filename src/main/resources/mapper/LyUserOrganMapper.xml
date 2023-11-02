@@ -8,7 +8,7 @@
             <arg column="FATHER_ID" javaType="java.lang.Integer" jdbcType="NUMERIC"/>
         </constructor>
     </resultMap>
-    <resultMap id="OrganInfoMap" type="com.east.demo.dto.LyUserOrganInfo">
+    <resultMap id="OrganInfoMap" type="com.east.demo.pojo.dto.LyUserOrganInfo">
         <id column="ID" javaType="java.lang.Integer" jdbcType="NUMERIC" property="id"/>
         <result column="NAME" javaType="java.lang.String" jdbcType="VARCHAR" property="name"/>
         <result column="FATHER_ID" javaType="java.lang.Integer" jdbcType="NUMERIC" property="fatherId"/>

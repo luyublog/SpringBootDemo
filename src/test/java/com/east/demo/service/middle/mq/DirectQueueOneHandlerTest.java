@@ -1,7 +1,7 @@
 package com.east.demo.service.middle.mq;
 
 import com.east.demo.common.config.middle.mq.RabbitConst;
-import com.east.demo.dto.middle.mq.MessageStruct;
+import com.east.demo.pojo.dto.middle.mq.MessageStruct;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

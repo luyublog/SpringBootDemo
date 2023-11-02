@@ -1,4 +1,4 @@
-package com.east.demo.dto;
+package com.east.demo.pojo.dto;
 
 import com.east.demo.persist.entity.LyUserOrgan;
 import lombok.AllArgsConstructor;

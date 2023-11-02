@@ -1,4 +1,4 @@
-package com.east.demo.dto.base.resp;
+package com.east.demo.pojo.dto.base.resp;
 
 import com.east.demo.common.enums.ErrorEnum;
 import lombok.Data;
