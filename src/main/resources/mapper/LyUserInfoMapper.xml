@@ -8,14 +8,37 @@
         <id column="LAST_NAME" javaType="String" jdbcType="VARCHAR" property="lastName"/>
         <id column="EMAIL" javaType="String" jdbcType="VARCHAR" property="email"/>
         <id column="PHONE_NUMBER" javaType="String" jdbcType="VARCHAR" property="phoneNumber"/>
-        <id column="SALARY" javaType="Long" jdbcType="NUMERIC" property="salary"/>
+        <id column="SALARY" javaType="Double" jdbcType="NUMERIC" property="salary"/>
     </resultMap>
 
     <!-- 通过name查询 -->
-    <select id="getByName" resultType="com.east.demo.persist.entity.LyUserInfo">
+    <select id="getByName" resultMap="BaseResultMap">
         SELECT *
         FROM HR.EMPLOYEES
         WHERE FIRST_NAME = #{value}
+          and rownum = 1
+    </select>
+    <select id="getByMap" resultMap="BaseResultMap">
+        SELECT *
+        FROM HR.EMPLOYEES
+        WHERE FIRST_NAME = #{firstName,jdbcType=VARCHAR}
+          and LAST_NAME = #{lastName,jdbcType=VARCHAR}
+          and rownum = 1
+    </select>
+    <select id="getByFullName" resultMap="BaseResultMap">
+        SELECT *
+        FROM HR.EMPLOYEES
+        WHERE FIRST_NAME = #{param1,jdbcType=VARCHAR}
+          and LAST_NAME = #{param2,jdbcType=VARCHAR}
+          and JOB_ID = #{param4,jdbcType=VARCHAR}
+          and rownum = 1
+    </select>
+    <select id="getByFullName2" resultMap="BaseResultMap">
+        SELECT *
+        FROM HR.EMPLOYEES
+        WHERE FIRST_NAME = #{firstName,jdbcType=VARCHAR}
+          and LAST_NAME = #{lastName,jdbcType=VARCHAR}
+          and JOB_ID = #{jobId,jdbcType=VARCHAR}
           and rownum = 1
     </select>
 </mapper>

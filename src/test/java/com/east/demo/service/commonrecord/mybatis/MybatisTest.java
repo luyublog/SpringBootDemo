@@ -13,6 +13,8 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 详解mapper参数配置: https://cloud.tencent.com/developer/article/1551940
@@ -38,12 +40,45 @@ class MybatisTest {
 
 
     @Test
-    public void getName() {
+    public void getNameByString() {
         try (SqlSession sqlSession = this.sqlSessionFactory.openSession(true);) {
             LyUserInfoMapper userMapper = sqlSession.getMapper(LyUserInfoMapper.class);
             LyUserInfo userModel = userMapper.getByName("Jack");
 //            log.info(userModel.toString());
             System.out.println(userModel);
+        }
+    }
+
+    @Test
+    public void getNameByMap() {
+        try (SqlSession sqlSession = this.sqlSessionFactory.openSession(true);) {
+            LyUserInfoMapper userMapper = sqlSession.getMapper(LyUserInfoMapper.class);
+            Map<String, Object> stringObjectMap = new HashMap<>();
+            stringObjectMap.put("firstName", "Steven");
+            stringObjectMap.put("lastName", "King");
+            LyUserInfo userModel = userMapper.getByMap(stringObjectMap);
+            log.info("{}", userModel);
+        }
+    }
+
+    @Test
+    public void getNameByFullNameTest() {
+        try (SqlSession sqlSession = this.sqlSessionFactory.openSession(true);) {
+            LyUserInfoMapper userMapper = sqlSession.getMapper(LyUserInfoMapper.class);
+            LyUserInfo userModel = userMapper.getByFullName("Steven", "King", "AD_PRES");
+            log.info("{}", userModel);
+        }
+    }
+
+    /**
+     * 指定Param，不受编译环境影响
+     */
+    @Test
+    public void getNameByFullNameTest2() {
+        try (SqlSession sqlSession = this.sqlSessionFactory.openSession(true);) {
+            LyUserInfoMapper userMapper = sqlSession.getMapper(LyUserInfoMapper.class);
+            LyUserInfo userModel = userMapper.getByFullName2("Steven", "King", "AD_PRES");
+            log.info("{}", userModel);
         }
     }
 
