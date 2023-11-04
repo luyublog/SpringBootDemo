@@ -32,5 +32,6 @@ build/
 
 ### VS Code ###
 .vscode/
-/src/main/resources/application.yaml
+/src/main/resources/application.*
+/src/main/resources/*.properties
 /logs

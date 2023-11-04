@@ -3,11 +3,12 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+    <!--    定义配置信息，这里配置只能解析properties类型，离谱-->
+    <properties resource="application4mybatisConfig.properties"/>
     <!--    <typeHandlers>-->
     <!--        <typeHandler jdbcType="CHAR" javaType="string" handler="com.east.demo.common.handler.MyStringHandler"/>-->
     <!--    </typeHandlers>-->
     <!--    &lt;!&ndash; 定义数据库的信息，默认使用development数据库构建环境 &ndash;&gt;-->
-    <properties resource="application.yaml"/>
     <environments default="development">
         <environment id="development">
             <transactionManager type="JDBC"/>
@@ -21,7 +22,7 @@
     </environments>
     <!-- 定义映射器 -->
     <mappers>
-        <!--        <package name="com.east.demo.persist.mapper"/>-->
+        <!--                <package name="com.east.demo.persist.mapper"/>-->
         <mapper resource="mapper/LyUserInfoMapper.xml"/>
         <!--        <mapper class="LyUserInfoMapper"/>-->
     </mappers>

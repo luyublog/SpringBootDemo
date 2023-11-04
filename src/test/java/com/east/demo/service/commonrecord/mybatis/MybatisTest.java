@@ -3,34 +3,33 @@ package com.east.demo.service.commonrecord.mybatis;
 import com.east.demo.persist.entity.LyUserInfo;
 import com.east.demo.persist.mapper.LyUserInfoMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * 详解mapper参数配置: https://cloud.tencent.com/developer/article/1551940
  */
-@SpringBootTest
 @Slf4j
 class MybatisTest {
-    @Autowired
     public SqlSessionFactory sqlSessionFactory;
 
     @BeforeEach
     void setUp() throws IOException {
-        //指定mybatis全局配置文件
-//        String resource = "mybatis/mybatis-config.xml";
-//        //读取全局配置文件
-//        InputStream inputStream = Resources.getResourceAsStream(resource);
-//        //构建SqlSessionFactory对象
-//        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-//        this.sqlSessionFactory = sqlSessionFactory;
+//        指定mybatis全局配置文件
+        String resource = "mybatis/mybatis-config.xml";
+        //读取全局配置文件
+        InputStream inputStream = Resources.getResourceAsStream(resource);
+        //构建SqlSessionFactory对象
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+        this.sqlSessionFactory = sqlSessionFactory;
     }
 
     @AfterEach
