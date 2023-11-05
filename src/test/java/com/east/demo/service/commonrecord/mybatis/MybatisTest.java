@@ -1,6 +1,7 @@
 package com.east.demo.service.commonrecord.mybatis;
 
 import com.east.demo.persist.entity.LyUserInfo;
+import com.east.demo.persist.mapper.LySequenceMapper;
 import com.east.demo.persist.mapper.LyUserInfoMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.io.Resources;
@@ -79,6 +80,18 @@ class MybatisTest {
             LyUserInfoMapper userMapper = sqlSession.getMapper(LyUserInfoMapper.class);
             LyUserInfo userModel = userMapper.getByFullName2("Steven", "King", "AD_PRES");
             log.info("{}", userModel);
+        }
+    }
+
+    /**
+     * 获取队列
+     */
+    @Test
+    public void selectSequenceTest() {
+        try (SqlSession sqlSession = this.sqlSessionFactory.openSession(true);) {
+            LySequenceMapper mapper = sqlSession.getMapper(LySequenceMapper.class);
+            Long sequence = mapper.selectSequence();
+            log.info("{}", sequence);
         }
     }
 

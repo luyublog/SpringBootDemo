@@ -22,8 +22,9 @@
     </environments>
     <!-- 定义映射器 -->
     <mappers>
-        <!--                <package name="com.east.demo.persist.mapper"/>-->
-        <mapper resource="mapper/LyUserInfoMapper.xml"/>
+        <!--        <package name="mapper"/>-->
+        <mapper resource="mybatis/mapper/LyUserInfoMapper.xml"/>
+        <mapper resource="mybatis/mapper/LySequenceMapper.xml"/>
         <!--        <mapper class="LyUserInfoMapper"/>-->
     </mappers>
 </configuration>
