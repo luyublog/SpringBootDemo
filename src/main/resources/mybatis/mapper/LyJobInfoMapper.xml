@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.east.demo.persist.mapper.LyJobInfoMapper">
+    <resultMap id="BaseResultMap" type="com.east.demo.persist.entity.LyJobInfo">
+        <id column="JOB_ID" javaType="String" jdbcType="VARCHAR" property="jobId"/>
+        <id column="JOB_TITLE" javaType="String" jdbcType="VARCHAR" property="jobTitle"/>
+        <id column="MIN_SALARY" javaType="Integer" jdbcType="NUMERIC" property="minSalary"/>
+        <id column="MAX_SALARY" javaType="Integer" jdbcType="NUMERIC" property="maxSalary"/>
+    </resultMap>
+
+    <select id="getByJobId" resultMap="BaseResultMap">
+        SELECT *
+        FROM HR.JOBS
+        WHERE JOB_ID = #{jobId,jdbcType=VARCHAR}
+    </select>
+</mapper>

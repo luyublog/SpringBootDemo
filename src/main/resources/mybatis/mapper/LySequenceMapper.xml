@@ -6,4 +6,8 @@
         SELECT HR.EMPLOYEES_SEQ.nextval
         from dual
     </select>
+    <select id="selectSequenceByName" resultType="java.lang.Long">
+        select ${sequenceName}.nextval
+        from dual
+    </select>
 </mapper>

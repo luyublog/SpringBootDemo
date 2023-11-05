@@ -3,8 +3,8 @@ package com.east.demo.service.commonrecord;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.east.demo.common.enums.StatusEnum;
-import com.east.demo.persist.entity.LyUserInfo;
-import com.east.demo.persist.mapper.LyUserInfoMapper;
+import com.east.demo.persist.entity.LyEmployeeInfo;
+import com.east.demo.persist.mapper.LyEmployeeInfoMapper;
 import com.east.demo.pojo.dto.base.resp.BaseResp;
 import com.east.demo.pojo.dto.serialize.SerializeTestReq;
 import lombok.extern.slf4j.Slf4j;
@@ -20,11 +20,11 @@ import org.springframework.stereotype.Service;
 public class DemoService {
 
     @Autowired
-    LyUserInfoMapper lyUserInfoMapper;
+    LyEmployeeInfoMapper lyEmployeeInfoMapper;
 
     public BaseResp<JSONObject> demo(JSONObject request) {
         log.info("this is exact service");
-        LyUserInfo userModel = lyUserInfoMapper.getByName("Jack");
+        LyEmployeeInfo userModel = lyEmployeeInfoMapper.getByName("Jack");
         log.info(userModel.toString());
         return BaseResp.ok(JSONUtil.parseObj(userModel));
     }

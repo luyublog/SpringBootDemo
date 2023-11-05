@@ -1,8 +1,8 @@
 package com.east.demo.service.commonrecord.mybatis;
 
-import com.east.demo.persist.entity.LyUserInfo;
+import com.east.demo.persist.entity.LyEmployeeInfo;
+import com.east.demo.persist.mapper.LyEmployeeInfoMapper;
 import com.east.demo.persist.mapper.LySequenceMapper;
-import com.east.demo.persist.mapper.LyUserInfoMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -14,15 +14,18 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 详解mapper参数配置: https://cloud.tencent.com/developer/article/1551940
+ * 详解mybatis:
+ * <a href="http://itsoku.com/course/4/82">详解mybatis</a>
  */
 @Slf4j
 class MybatisTest {
     public SqlSessionFactory sqlSessionFactory;
+    private Long startTime;
 
     @BeforeEach
     void setUp() throws IOException {
@@ -33,31 +36,36 @@ class MybatisTest {
         //构建SqlSessionFactory对象
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
         this.sqlSessionFactory = sqlSessionFactory;
+        startTime = System.currentTimeMillis();
     }
 
     @AfterEach
     void tearDown() {
+        log.info("总耗时：{}ms", System.currentTimeMillis() - startTime);
     }
 
 
     @Test
     public void getNameByString() {
         try (SqlSession sqlSession = this.sqlSessionFactory.openSession(true);) {
-            LyUserInfoMapper userMapper = sqlSession.getMapper(LyUserInfoMapper.class);
-            LyUserInfo userModel = userMapper.getByName("Jack");
-//            log.info(userModel.toString());
-            System.out.println(userModel);
+            LyEmployeeInfoMapper userMapper = sqlSession.getMapper(LyEmployeeInfoMapper.class);
+            LyEmployeeInfo userModel = userMapper.getByName("Steven");
+            sqlSession.clearCache();
+            LyEmployeeInfo userModel2 = userMapper.getByName("Steven");
+
+
+            log.info("{}", userModel == userModel2);
         }
     }
 
     @Test
     public void getNameByMap() {
         try (SqlSession sqlSession = this.sqlSessionFactory.openSession(true);) {
-            LyUserInfoMapper userMapper = sqlSession.getMapper(LyUserInfoMapper.class);
+            LyEmployeeInfoMapper userMapper = sqlSession.getMapper(LyEmployeeInfoMapper.class);
             Map<String, Object> stringObjectMap = new HashMap<>();
             stringObjectMap.put("firstName", "Steven");
             stringObjectMap.put("lastName", "King");
-            LyUserInfo userModel = userMapper.getByMap(stringObjectMap);
+            LyEmployeeInfo userModel = userMapper.getByMap(stringObjectMap);
             log.info("{}", userModel);
         }
     }
@@ -65,8 +73,8 @@ class MybatisTest {
     @Test
     public void getNameByFullNameTest() {
         try (SqlSession sqlSession = this.sqlSessionFactory.openSession(true);) {
-            LyUserInfoMapper userMapper = sqlSession.getMapper(LyUserInfoMapper.class);
-            LyUserInfo userModel = userMapper.getByFullName("Steven", "King", "AD_PRES");
+            LyEmployeeInfoMapper userMapper = sqlSession.getMapper(LyEmployeeInfoMapper.class);
+            LyEmployeeInfo userModel = userMapper.getByFullName("Steven", "King", "AD_PRES");
             log.info("{}", userModel);
         }
     }
@@ -77,8 +85,8 @@ class MybatisTest {
     @Test
     public void getNameByFullNameTest2() {
         try (SqlSession sqlSession = this.sqlSessionFactory.openSession(true);) {
-            LyUserInfoMapper userMapper = sqlSession.getMapper(LyUserInfoMapper.class);
-            LyUserInfo userModel = userMapper.getByFullName2("Steven", "King", "AD_PRES");
+            LyEmployeeInfoMapper userMapper = sqlSession.getMapper(LyEmployeeInfoMapper.class);
+            LyEmployeeInfo userModel = userMapper.getByFullName2("Steven", "King", "AD_PRES");
             log.info("{}", userModel);
         }
     }
@@ -93,6 +101,90 @@ class MybatisTest {
             Long sequence = mapper.selectSequence();
             log.info("{}", sequence);
         }
+    }
+
+    /**
+     * 获取队列
+     */
+    @Test
+    public void selectSequenceByNameTest() {
+        try (SqlSession sqlSession = this.sqlSessionFactory.openSession(true);) {
+            LySequenceMapper mapper = sqlSession.getMapper(LySequenceMapper.class);
+            Long sequence = mapper.selectSequenceByName("HR.EMPLOYEES_SEQ");
+            log.info("{}", sequence);
+        }
+    }
+
+    /**
+     * xml中通过associate标签来连续查询
+     */
+    @Test
+    public void selectInfoByAssociationInXmlTest() {
+        try (SqlSession sqlSession = this.sqlSessionFactory.openSession(true);) {
+            LyEmployeeInfoMapper mapper = sqlSession.getMapper(LyEmployeeInfoMapper.class);
+            LyEmployeeInfo info = mapper.getInfoWithJobByFirstName("Steven");
+            log.info("{}", info);
+        }
+    }
+
+    @Test
+    public void getNameBySpecificTest() {
+        try (SqlSession sqlSession = this.sqlSessionFactory.openSession(true);) {
+            LyEmployeeInfoMapper userMapper = sqlSession.getMapper(LyEmployeeInfoMapper.class);
+            LyEmployeeInfo userModel = userMapper.getBySpecific(
+                    "Steven", "King", "", Collections.singletonList("AD_PRES"));
+            log.info("{}", userModel);
+        }
+    }
+
+    /**
+     * 一级缓存
+     * 缓存失效方法：
+     * 1. 增删改
+     * 2. sqlSession.clearCache()
+     * 3. xml上指定flushCache=true
+     */
+    @Test
+    public void cacheTest() {
+        try (SqlSession sqlSession = this.sqlSessionFactory.openSession(true);) {
+            LyEmployeeInfoMapper userMapper = sqlSession.getMapper(LyEmployeeInfoMapper.class);
+            LyEmployeeInfo userModel = userMapper.getByName("Steven");
+//            sqlSession.clearCache();
+            LyEmployeeInfo userModel2 = userMapper.getByName("Steven");
+
+
+            log.info("{}", userModel == userModel2);
+        }
+    }
+
+    /**
+     * 二级缓存相关
+     * 开启：全局配置+具体xml中添加cache标签+对象实现序列化接口
+     * 与一级区别： 不是指向内存中的同一个对象
+     */
+    @Test
+    public void level2CacheTest() {
+        LyEmployeeInfo userModelList1;
+        LyEmployeeInfo userModelList2;
+        LyEmployeeInfo userModelList3;
+        try (SqlSession sqlSession1 = this.sqlSessionFactory.openSession(true);) {
+            LyEmployeeInfoMapper mapper = sqlSession1.getMapper(LyEmployeeInfoMapper.class);
+            userModelList1 = mapper.getByName("Steven");
+            log.info("{}", userModelList1);
+        }
+        try (SqlSession sqlSession2 = this.sqlSessionFactory.openSession(true);) {
+            LyEmployeeInfoMapper mapper = sqlSession2.getMapper(LyEmployeeInfoMapper.class);
+            userModelList2 = mapper.getByName("Steven");
+            log.info("{}", userModelList2);
+        }
+        try (SqlSession sqlSession2 = this.sqlSessionFactory.openSession(true);) {
+            LyEmployeeInfoMapper mapper = sqlSession2.getMapper(LyEmployeeInfoMapper.class);
+            userModelList3 = mapper.getByName("Steven");
+            log.info("{}", userModelList3);
+        }
+
+        log.info("userModelList1==userModelList2: {}", userModelList1 == userModelList2);
+        log.info("userModelList2==userModelList3: {}", userModelList2 == userModelList3);
     }
 
     public void init() {

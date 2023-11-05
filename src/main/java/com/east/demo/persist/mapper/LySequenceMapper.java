@@ -1,5 +1,6 @@
 package com.east.demo.persist.mapper;
 
+import org.apache.ibatis.annotations.Param;
 import org.mapstruct.Mapper;
 
 /**
@@ -17,4 +18,9 @@ public interface LySequenceMapper {
      * @return long
      */
     Long selectSequence();
+
+    /**
+     * 获取指定队列名称的队列值
+     */
+    Long selectSequenceByName(@Param("sequenceName") String sequenceName);
 }

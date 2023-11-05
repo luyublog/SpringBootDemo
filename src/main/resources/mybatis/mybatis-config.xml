@@ -5,9 +5,13 @@
 <configuration>
     <!--    定义配置信息，这里配置只能解析properties类型，离谱-->
     <properties resource="application4mybatisConfig.properties"/>
-    <!--    <typeHandlers>-->
-    <!--        <typeHandler jdbcType="CHAR" javaType="string" handler="com.east.demo.common.handler.MyStringHandler"/>-->
-    <!--    </typeHandlers>-->
+    <settings>
+        <setting name="cacheEnabled" value="true"/>
+    </settings>
+    <typeHandlers>
+        <!--        <typeHandler jdbcType="CHAR" javaType="string" handler="com.east.demo.common.handler.MyStringHandler"/>-->
+        <typeHandler handler="com.east.demo.common.handler.SexEnumTypeHandler"/>
+    </typeHandlers>
     <!--    &lt;!&ndash; 定义数据库的信息，默认使用development数据库构建环境 &ndash;&gt;-->
     <environments default="development">
         <environment id="development">
@@ -22,9 +26,11 @@
     </environments>
     <!-- 定义映射器 -->
     <mappers>
-        <!--        <package name="mapper"/>-->
-        <mapper resource="mybatis/mapper/LyUserInfoMapper.xml"/>
+        <!--        为什么package就不行呢-->
+        <!--        <package name="mybatis/mapper/"/>-->
+        <mapper resource="mybatis/mapper/LyEmployeeInfoMapper.xml"/>
         <mapper resource="mybatis/mapper/LySequenceMapper.xml"/>
-        <!--        <mapper class="LyUserInfoMapper"/>-->
+        <mapper resource="mybatis/mapper/LyJobInfoMapper.xml"/>
+        <!--        <mapper class="LyEmployeeInfoMapper"/>-->
     </mappers>
 </configuration>
