@@ -6,6 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.kafka.core.KafkaTemplate;
 
+
+/**
+ * kafka相关
+ * <p>
+ * kafka配置解释：https://www.conduktor.io/kafka/kafka-topics-choosing-the-replication-factor-and-partitions-count/
+ */
 @SpringBootTest
 class KafkaMessageHandlerTest {
     @Autowired
