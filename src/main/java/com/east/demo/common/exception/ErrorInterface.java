@@ -11,10 +11,24 @@ import java.text.MessageFormat;
  * @date: 2023/11/9
  */
 public interface ErrorInterface {
+    /**
+     * 错误码
+     *
+     * @return 错误码
+     */
     String getErrorCode();
 
+    /**
+     * 错误信息
+     * @return 错误信息
+     */
     String getErrorMsg();
 
+    /**
+     * 错误信息
+     * @param params 自定义部分
+     * @return 错误信息包含自定义部分
+     */
     default String getErrorMsg(Object... params) {
         return MessageFormat.format(this.getErrorMsg(), params);
     }
