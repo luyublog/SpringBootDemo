@@ -11,6 +11,7 @@
     <typeHandlers>
         <!--        <typeHandler jdbcType="CHAR" javaType="string" handler="com.east.demo.common.handler.MyStringHandler"/>-->
         <typeHandler handler="com.east.demo.common.handler.SexEnumTypeHandler"/>
+        <typeHandler handler="com.east.demo.common.handler.CharTypeHandler"/>
     </typeHandlers>
     <!--    &lt;!&ndash; 定义数据库的信息，默认使用development数据库构建环境 &ndash;&gt;-->
     <environments default="development">

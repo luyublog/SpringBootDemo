@@ -53,7 +53,7 @@
         FROM HR.EMPLOYEES
         WHERE FIRST_NAME = #{firstName,jdbcType=VARCHAR}
           and LAST_NAME = #{lastName,jdbcType=VARCHAR}
-          and JOB_ID = #{jobId,jdbcType=VARCHAR}
+          and JOB_ID = #{jobId,jdbcType=CHAR}
           and rownum = 1
     </select>
     <select id="getInfoWithJobByFirstName" resultMap="BaseResultMapWithJobInfo">
