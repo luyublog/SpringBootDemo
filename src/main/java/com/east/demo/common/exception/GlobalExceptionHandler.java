@@ -2,7 +2,6 @@ package com.east.demo.common.exception;
 
 import cn.hutool.core.net.URLEncodeUtil;
 import cn.hutool.json.JSONUtil;
-import com.east.demo.common.enums.ErrorEnum;
 import com.east.demo.pojo.dto.base.resp.BaseResp;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -30,7 +29,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(HeaderRespException.class)
     public ResponseEntity<String> handleHeaderRespException(HeaderRespException headerRespException) {
         log.error("特殊响应异常", headerRespException);
-        BaseResp baseResp = new BaseResp(ErrorEnum.FAIL.getCode(), headerRespException.getMsg());
+        BaseResp baseResp = new BaseResp(ErrorEnum.FAIL.getErrorCode(), headerRespException.getMsg());
         String encodedResp = URLEncodeUtil.encode(JSONUtil.toJsonStr(baseResp), StandardCharsets.UTF_8);
         return ResponseEntity.ok().header("json", encodedResp).contentType(MediaType.TEXT_PLAIN).build();
     }

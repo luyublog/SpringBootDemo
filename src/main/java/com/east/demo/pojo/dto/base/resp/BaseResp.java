@@ -1,6 +1,6 @@
 package com.east.demo.pojo.dto.base.resp;
 
-import com.east.demo.common.enums.ErrorEnum;
+import com.east.demo.common.exception.ErrorEnum;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,8 +16,8 @@ public class BaseResp<T> {
     private T data;
 
     public BaseResp(ErrorEnum errorEnum) {
-        this.respCode = errorEnum.getCode();
-        this.respMsg = errorEnum.getMsg();
+        this.respCode = errorEnum.getErrorCode();
+        this.respMsg = errorEnum.getErrorMsg();
     }
 
     public BaseResp(String respCode, String respMsg) {
@@ -26,8 +26,8 @@ public class BaseResp<T> {
     }
 
     public BaseResp(ErrorEnum errorEnum, T data) {
-        this.respCode = errorEnum.getCode();
-        this.respMsg = errorEnum.getMsg();
+        this.respCode = errorEnum.getErrorCode();
+        this.respMsg = errorEnum.getErrorMsg();
         this.data = data;
     }
 
