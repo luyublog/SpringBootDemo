@@ -2,6 +2,7 @@ package com.east.demo.common.util;
 
 import cn.hutool.core.thread.ThreadFactoryBuilder;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -19,20 +20,21 @@ import java.util.concurrent.*;
  */
 
 @Configuration
+@ConfigurationProperties(prefix = "config.thread-pool") // 不能是驼峰形式...
 public class MyExecutorPool {
-    @Value("${threadPool.coreSize:8}")
+    @Value("${config.thread-pool.coreSize:8}")
     private int corePoolSize;
 
-    @Value("${threadPool.maxSize:32}")
+    @Value("${config.thread-pool.maxSize:32}")
     private int maxPoolSize;
 
-    @Value("${threadPool.queueCapacity:1024}")
+    @Value("${config.thread-pool.queueCapacity:1024}")
     private int queueCapacity;
 
-    @Value("${threadPool.keepAlive:30}")
+    @Value("${config.thread-pool.keepAlive:30}")
     private int keepAliveSeconds;
 
-    @Value("${threadPool.threadNamePrefix:myDefaultExecutorPool-}")
+    @Value("${config.thread-pool.threadNamePrefix:myDefaultExecutorPool-}")
     private String threadNamePrefix;
 
     /**
