@@ -1,6 +1,7 @@
 package com.east.demo.persist.entity;
 
 import lombok.Data;
+import lombok.ToString;
 
 /**
  * Job信息
@@ -10,6 +11,7 @@ import lombok.Data;
  */
 
 @Data
+@ToString
 public class LyJobInfo {
     private String jobId;
     private String jobTitle;

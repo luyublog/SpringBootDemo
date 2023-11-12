@@ -46,4 +46,6 @@ public interface LyEmployeeInfoMapper {
                                  @Param("lastName") String lastName,
                                  @Param("jobId") String jobId,
                                  @Param("jobIdList") List<String> jobIdList);
+
+    int updateSexByEmployeeIdInt(@Param("employeeId") Long employeeId);
 }

@@ -25,16 +25,18 @@ public enum SexEnum {
      * 女
      */
     WOMAN("0", "女");
-    private String value;
-    private String name;
+
+
+    private final String value;
+    private final String description;
 
     SexEnum(String value, String name) {
         this.value = value;
-        this.name = name;
+        this.description = name;
     }
 
-    public String getName() {
-        return name;
+    public String getDescription() {
+        return description;
     }
 
     public static SexEnum getByValue(String value) {

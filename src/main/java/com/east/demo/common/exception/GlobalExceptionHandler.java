@@ -26,6 +26,12 @@ public class GlobalExceptionHandler {
         return new BaseResp(ErrorEnum.FAIL);
     }
 
+    @ExceptionHandler(BaseException.class)
+    public Object handleBaseException(BaseException e) {
+        log.error("基本异常", e);
+        return new BaseResp(ErrorEnum.FAIL.getErrorCode(), e.getMessage());
+    }
+
     @ExceptionHandler(HeaderRespException.class)
     public ResponseEntity<String> handleHeaderRespException(HeaderRespException headerRespException) {
         log.error("特殊响应异常", headerRespException);

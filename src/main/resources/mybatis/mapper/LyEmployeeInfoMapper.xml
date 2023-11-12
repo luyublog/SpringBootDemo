@@ -13,7 +13,7 @@
         <id column="PHONE_NUMBER" javaType="String" jdbcType="VARCHAR" property="phoneNumber"/>
         <id column="SALARY" javaType="Double" jdbcType="NUMERIC" property="salary"/>
         <id column="JOB_ID" javaType="String" jdbcType="VARCHAR" property="jobId"/>
-        <id column="SEX" javaType="String" jdbcType="VARCHAR" property="sex"
+        <id column="SEX" javaType="com.east.demo.common.enums.SexEnum" jdbcType="CHAR" property="sex"
             typeHandler="com.east.demo.common.handler.SexEnumTypeHandler"/>
     </resultMap>
     <resultMap id="BaseResultMapWithJobInfo" type="com.east.demo.persist.entity.LyEmployeeInfo" extends="BaseResultMap">
@@ -25,6 +25,11 @@
         EMPLOYEE_ID
         ,FIRST_NAME,LAST_NAME,EMAIL,PHONE_NUMBER,SALARY,JOB_ID
     </sql>
+    <update id="updateSexByEmployeeIdInt">
+        update HR.EMPLOYEES
+        set SEX='1'
+        where EMPLOYEE_ID = #{employeeId,jdbcType=INTEGER}
+    </update>
 
     <!-- 通过name查询 -->
     <select id="getByName" resultMap="BaseResultMap" flushCache="false">
@@ -45,7 +50,7 @@
         FROM HR.EMPLOYEES
         WHERE FIRST_NAME = #{param1,jdbcType=VARCHAR}
           and LAST_NAME = #{param2,jdbcType=VARCHAR}
-          and JOB_ID = #{param4,jdbcType=VARCHAR}
+          and JOB_ID = #{param3,jdbcType=VARCHAR}
           and rownum = 1
     </select>
     <select id="getByFullName2" resultMap="BaseResultMap">

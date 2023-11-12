@@ -25,4 +25,19 @@ public class LyEmployeeInfo implements Serializable {
     private Double salary;
     private String jobId;
     private LyJobInfo jobInfo;
+
+//    @Override
+//    public String toString() {
+//        return "LyEmployeeInfo{" +
+//                "employeeId=" + employeeId +
+//                ", firstName='" + firstName + '\'' +
+//                ", lastName='" + lastName + '\'' +
+//                ", email='" + email + '\'' +
+//                ", phoneNumber='" + phoneNumber + '\'' +
+//                ", sex=" + sex.getValue() +
+//                ", salary=" + salary +
+//                ", jobId='" + jobId + '\'' +
+//                ", jobInfo=" + jobInfo +
+//                '}';
+//    }
 }

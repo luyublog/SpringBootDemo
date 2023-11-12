@@ -3,10 +3,22 @@ package com.east.demo.service.commonrecord;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.east.demo.common.enums.StatusEnum;
+import com.east.demo.persist.entity.LyEmployeeInfo;
+import com.east.demo.persist.mapper.LyEmployeeInfoMapper;
 import com.east.demo.pojo.dto.serialize.SerializeTestReq;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
+@SpringBootTest
+@Slf4j
 class DemoServiceTest {
+    @Autowired
+    private DemoService demoService;
+    @Autowired
+    private LyEmployeeInfoMapper lyEmployeeInfoMapper;
+
     @Test
     public void testSerialize() {
         SerializeTestReq req = new SerializeTestReq();
@@ -30,4 +42,11 @@ class DemoServiceTest {
         System.out.println(bean);
     }
 
+    @Test
+    void testTransactionalAnnotate() {
+        demoService.transactionalAnnotate();
+        log.info("update done");
+        LyEmployeeInfo info = lyEmployeeInfoMapper.getByFullName("Steven", "King", "AD_PRES");
+        log.info(info.toString());
+    }
 }

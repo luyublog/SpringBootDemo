@@ -10,6 +10,7 @@ import com.east.demo.pojo.dto.serialize.SerializeTestReq;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Description:
@@ -47,6 +48,14 @@ public class DemoService {
     public BaseResp<SerializeTestReq> deserializeEnum(SerializeTestReq req) {
         log.info("反序列化后结果为：{}", req.toString());
         return BaseResp.ok(req);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void transactionalAnnotate() {
+        lyEmployeeInfoMapper.updateSexByEmployeeIdInt(100L);
+        LyEmployeeInfo info = lyEmployeeInfoMapper.getByFullName("Steven", "King", "AD_PRES");
+        log.info(info.toString());
+//        throw new BaseException(ErrorEnum.FAIL);
     }
 }
 

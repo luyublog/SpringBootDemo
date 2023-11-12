@@ -1,5 +1,6 @@
 package com.east.demo.common.handler;
 
+import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 import oracle.jdbc.OraclePreparedStatement;
 import org.apache.ibatis.type.BaseTypeHandler;
@@ -13,6 +14,7 @@ import java.sql.SQLException;
 
 /**
  * Char类型处理
+ * MappedTypes就可以绑定多个java类型
  *
  * @author: east
  * @date: 2023/11/9
@@ -32,16 +34,16 @@ public class CharTypeHandler extends BaseTypeHandler<String> {
 
     @Override
     public String getNullableResult(ResultSet rs, String columnName) throws SQLException {
-        return rs.getString(columnName);
+        return StrUtil.trim(rs.getString(columnName));
     }
 
     @Override
     public String getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
-        return rs.getString(columnIndex);
+        return StrUtil.trim(rs.getString(columnIndex));
     }
 
     @Override
     public String getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
-        return cs.getString(columnIndex);
+        return StrUtil.trim(cs.getString(columnIndex));
     }
 }
