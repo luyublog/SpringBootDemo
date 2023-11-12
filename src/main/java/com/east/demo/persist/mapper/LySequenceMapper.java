@@ -1,7 +1,7 @@
 package com.east.demo.persist.mapper;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.mapstruct.Mapper;
 
 /**
  * 获取序列mapper

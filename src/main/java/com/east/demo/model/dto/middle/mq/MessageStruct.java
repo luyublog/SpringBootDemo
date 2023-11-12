@@ -1,4 +1,4 @@
-package com.east.demo.pojo.dto.middle.mq;
+package com.east.demo.model.dto.middle.mq;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

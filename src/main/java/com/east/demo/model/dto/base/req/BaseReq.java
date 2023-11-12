@@ -1,4 +1,4 @@
-package com.east.demo.pojo.dto.base.req;
+package com.east.demo.model.dto.base.req;
 
 import lombok.Data;
 

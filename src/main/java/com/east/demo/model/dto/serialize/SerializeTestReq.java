@@ -1,7 +1,7 @@
-package com.east.demo.pojo.dto.serialize;
+package com.east.demo.model.dto.serialize;
 
 import com.east.demo.common.enums.StatusEnum;
-import com.east.demo.pojo.dto.base.req.BaseReq;
+import com.east.demo.model.dto.base.req.BaseReq;
 import lombok.Data;
 import lombok.ToString;
 

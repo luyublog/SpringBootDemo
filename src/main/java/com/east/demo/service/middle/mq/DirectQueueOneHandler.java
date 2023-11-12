@@ -2,7 +2,7 @@ package com.east.demo.service.middle.mq;
 
 import cn.hutool.json.JSONUtil;
 import com.east.demo.common.config.middle.mq.RabbitConst;
-import com.east.demo.pojo.dto.middle.mq.MessageStruct;
+import com.east.demo.model.dto.middle.mq.MessageStruct;
 import com.rabbitmq.client.Channel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;

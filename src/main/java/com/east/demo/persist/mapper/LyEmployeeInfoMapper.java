@@ -1,8 +1,8 @@
 package com.east.demo.persist.mapper;
 
 import com.east.demo.persist.entity.LyEmployeeInfo;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.mapstruct.Mapper;
 
 import java.util.List;
 import java.util.Map;

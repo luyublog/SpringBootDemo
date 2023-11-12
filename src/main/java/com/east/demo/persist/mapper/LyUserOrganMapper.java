@@ -1,9 +1,9 @@
 package com.east.demo.persist.mapper;
 
+import com.east.demo.model.bo.LyUserOrganInfo;
 import com.east.demo.persist.entity.LyUserOrgan;
-import com.east.demo.pojo.dto.LyUserOrganInfo;
 import org.apache.ibatis.annotations.MapKey;
-import org.mapstruct.Mapper;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.Map;
 

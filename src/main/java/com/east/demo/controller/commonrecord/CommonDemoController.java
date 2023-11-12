@@ -2,8 +2,8 @@ package com.east.demo.controller.commonrecord;
 
 import cn.hutool.json.JSONObject;
 import com.east.demo.common.annotation.SpeicalAspectAnnotation;
-import com.east.demo.pojo.dto.base.resp.BaseResp;
-import com.east.demo.pojo.dto.serialize.SerializeTestReq;
+import com.east.demo.model.dto.base.resp.BaseResp;
+import com.east.demo.model.dto.serialize.SerializeTestReq;
 import com.east.demo.service.commonrecord.DemoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
