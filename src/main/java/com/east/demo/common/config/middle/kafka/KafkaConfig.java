@@ -18,24 +18,43 @@ import org.springframework.kafka.listener.ContainerProperties;
  * @date: 2023/10/29
  */
 
+
+// 配置类
 @Configuration
+// 启用KafkaProperties类配置属性
 @EnableConfigurationProperties({KafkaProperties.class})
+// 手动开启配置Kafka（这里是因为在自动配置里排除了）
 @EnableKafka
+// 构造函数，为了初始化：kafkaProperties
 @AllArgsConstructor
+// 配置条件启用
 @ConditionalOnProperty("spring.kafka.enable")
 public class KafkaConfig {
     private final KafkaProperties kafkaProperties;
 
+    /**
+     * 生成kafka生产者实例模板
+     *
+     * @return kafka生产者实例
+     */
     @Bean
     public KafkaTemplate<String, String> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
 
+    /**
+     * 根据配置生成kafka生产者工厂
+     * @return kafka生产者工厂
+     */
     @Bean
     public ProducerFactory<String, String> producerFactory() {
         return new DefaultKafkaProducerFactory<>(kafkaProperties.buildProducerProperties());
     }
 
+    /**
+     * kafka监听者工厂？
+     * @return kafka监听者工厂？
+     */
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
@@ -46,11 +65,19 @@ public class KafkaConfig {
         return factory;
     }
 
+    /**
+     * 消费者工厂？
+     * @return
+     */
     @Bean
     public ConsumerFactory<String, String> consumerFactory() {
         return new DefaultKafkaConsumerFactory<>(kafkaProperties.buildConsumerProperties());
     }
 
+    /**
+     *
+     * @return
+     */
     @Bean("ackContainerFactory")
     public ConcurrentKafkaListenerContainerFactory<String, String> ackContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();

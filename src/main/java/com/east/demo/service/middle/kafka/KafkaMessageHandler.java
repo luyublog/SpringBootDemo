@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 /**
  * kafka消息处理器
  *
+ * 参考：https://cloud.tencent.com/developer/article/1542310
+ *
  * @author: east
  * @date: 2023/10/29
  */
