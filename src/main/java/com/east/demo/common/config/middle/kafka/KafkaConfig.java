@@ -33,17 +33,8 @@ public class KafkaConfig {
     private final KafkaProperties kafkaProperties;
 
     /**
-     * 生成kafka生产者实例模板
-     *
-     * @return kafka生产者实例
-     */
-    @Bean
-    public KafkaTemplate<String, String> kafkaTemplate() {
-        return new KafkaTemplate<>(producerFactory());
-    }
-
-    /**
      * 根据配置生成kafka生产者工厂
+     *
      * @return kafka生产者工厂
      */
     @Bean
@@ -52,38 +43,56 @@ public class KafkaConfig {
     }
 
     /**
-     * kafka监听者工厂？
-     * @return kafka监听者工厂？
+     * 根据工厂实例生成kafka生产者模板实例
+     *
+     * @return kafka生产者实例
      */
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(consumerFactory());
-        factory.setConcurrency(KafkaConst.DEFAULT_PARTITION_NUM);
-        factory.setBatchListener(true);
-        factory.getContainerProperties().setPollTimeout(3000);
-        return factory;
+    public KafkaTemplate<String, String> kafkaTemplate() {
+        return new KafkaTemplate<>(producerFactory());
     }
 
+
     /**
-     * 消费者工厂？
-     * @return
+     * 创建Kafka消费者。
+     * @return Kafka消费者。
      */
     @Bean
     public ConsumerFactory<String, String> consumerFactory() {
         return new DefaultKafkaConsumerFactory<>(kafkaProperties.buildConsumerProperties());
     }
 
+
     /**
+     * kafka监听容器listener配置
+     * listener he consumer区别： consumer作为kafka客户端去poll，然后调用listener线程
+     * https://blog.csdn.net/dshf_1/article/details/103203920
+     * @return kafka监听者
+     */
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(consumerFactory());
+        // 线程数：3 已经在yml配置过了
+//        factory.setConcurrency(KafkaConst.DEFAULT_PARTITION_NUM);
+        factory.setBatchListener(true);
+        factory.getContainerProperties().setPollTimeout(3000);
+        return factory;
+    }
+
+
+    /**
+     * 这里特殊配置一个特别的kafka监听容器listener配置
      *
-     * @return
+     * https://blog.csdn.net/dshf_1/article/details/103203920
+     * @return kafka监听者
      */
     @Bean("ackContainerFactory")
     public ConcurrentKafkaListenerContainerFactory<String, String> ackContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL_IMMEDIATE);
-        factory.setConcurrency(KafkaConst.DEFAULT_PARTITION_NUM);
+        factory.setConcurrency(KafkaConst.DEFAULT_CONCURRENCY_NUM);
         return factory;
     }
 

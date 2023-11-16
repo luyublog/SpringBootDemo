@@ -9,12 +9,12 @@ package com.east.demo.common.config.middle.kafka;
 
 public class KafkaConst {
     /**
-     * 默认分区大小
+     * 默认并发数
      */
-    public static final Integer DEFAULT_PARTITION_NUM = 3;
+    public static final Integer DEFAULT_CONCURRENCY_NUM = 3;
 
     /**
      * Topic 名称
      */
-    public static final String TOPIC_TEST = "messages";
+    public static final String TOPIC_TEST = "TOPIC_LY_TEST";
 }
