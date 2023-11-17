@@ -20,10 +20,13 @@ public class BasePageInfoResp<S extends CommonSummary, T> {
     protected List<T> detail;
 
     /**
-     * 自定义的概略信息
+     * 自定义的概略信息,可以定义为内部类，也可以在外部继承CommonSummary后使用
+     * 放这里两个目的：
+     * 1. 方便使用，不建新类了
+     * 2. 测试内部类在resultMap中使用时顺序问题  todo 因为没有设置默认构造函数造成mybatis处理返回结果时无法找到map的对应关系
      */
     @Data
-    public static class TestCommonSummary extends CommonSummary {
-        private String testString;
+    public static class MyCommonSummary extends CommonSummary {
+        private String total;
     }
 }
