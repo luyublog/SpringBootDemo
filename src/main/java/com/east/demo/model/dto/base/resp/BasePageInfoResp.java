@@ -11,12 +11,19 @@ import java.util.List;
  * @date: 2023/11/16
  */
 @Data
-public class BasePageInfoResp<T> {
+public class BasePageInfoResp<S extends CommonSummary, T> {
     /**
-     * 这里用通用类而不用模板的原因主要是：
+     * 这里用extends CommonSummary限定原因主要是：
      * 保证响应的概略信息有统一的格式
      */
-    protected CommonSummary summary;
+    protected S summary;
     protected List<T> detail;
 
+    /**
+     * 自定义的概略信息
+     */
+    @Data
+    public static class TestCommonSummary extends CommonSummary {
+        private String testString;
+    }
 }
