@@ -1,7 +1,9 @@
 package com.east.demo.service.commonrecord.mybatis;
 
 import com.east.demo.persist.entity.LyEmployeeInfo;
+import com.east.demo.persist.entity.LyJobInfo;
 import com.east.demo.persist.mapper.LyEmployeeInfoMapper;
+import com.east.demo.persist.mapper.LyJobInfoMapper;
 import com.east.demo.persist.mapper.LySequenceMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.io.Resources;
@@ -187,32 +189,16 @@ class MybatisTest {
         log.info("userModelList2==userModelList3: {}", userModelList2 == userModelList3);
     }
 
-    public void init() {
-//        String resource="mybatis-config.xml";
-//        InputStream inputStream=null;
-//        try {
-//            inputStream = Resources.getResourceAsStream(resource);
-//        } catch (IOException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//        SqlSessionFactory sqlSessionFactory=null;
-//        sqlSessionFactory=new SqlSessionFactoryBuilder().build(inputStream);
-//        SqlSession sqlSession=null;
-//        try {
-//            sqlSession=sqlSessionFactory.openSession();
-//            RoleMapper roleMapper=sqlSession.getMapper(RoleMapper.class);
-//            Role role=roleMapper.getRole(1L);
-//            System.out.println(role.getId()+":"+role.getRoleName()+":"+role.getNote());
-//            sqlSession.commit();
-//
-//        } catch (Exception e) {
-//            // TODO Auto-generated catch block
-//            sqlSession.rollback();
-//            e.printStackTrace();
-//        }finally {
-//            sqlSession.close();
-//        }
+    /**
+     * resultMap失效测试方法
+     */
+    @Test
+    public void resultMapExceptionTest() {
+        try (SqlSession sqlSession = this.sqlSessionFactory.openSession(true)) {
+            LyJobInfoMapper mapper = sqlSession.getMapper(LyJobInfoMapper.class);
+            LyJobInfo testJob = mapper.getByJobId("TEST_JOB");
+            log.info(testJob.toString());
+        }
     }
 
 }

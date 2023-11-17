@@ -5,12 +5,12 @@
     <resultMap id="BaseResultMap" type="com.east.demo.persist.entity.LyJobInfo">
         <id column="JOB_ID" javaType="String" jdbcType="VARCHAR" property="jobId"/>
         <id column="JOB_TITLE" javaType="String" jdbcType="VARCHAR" property="jobTitle"/>
-        <id column="MIN_SALARY" javaType="Integer" jdbcType="NUMERIC" property="minSalary"/>
+        <id column="MIN_SALARY" javaType="Short" jdbcType="NUMERIC" property="minSalary"/>
         <id column="MAX_SALARY" javaType="Integer" jdbcType="NUMERIC" property="maxSalary"/>
     </resultMap>
 
     <select id="getByJobId" resultMap="BaseResultMap">
-        SELECT *
+        SELECT JOB_ID, JOB_TITLE, MAX_SALARY, MIN_SALARY
         FROM HR.JOBS
         WHERE JOB_ID = #{jobId,jdbcType=VARCHAR}
     </select>
