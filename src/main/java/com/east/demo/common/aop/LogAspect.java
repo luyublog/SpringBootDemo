@@ -73,11 +73,11 @@ public class LogAspect {
         }
         hashMapThreadLocal.get().put("startTime", System.currentTimeMillis());
 
-        log.info("===========接收到新的请求=============");
-        log.info("接口：[{}] ", Objects.isNull(annotation) ? "方法无描述注解" : annotation.value());
-        log.info("接口uri: [{}]", request.getRequestURI());
+        log.info("===========>>接收到新的请求=============>>");
+        log.info("===========>>接口：[{}] ", Objects.isNull(annotation) ? "方法无描述注解" : annotation.value());
+        log.info("===========>>接口uri: [{}]", request.getRequestURI());
         // todo 仅打印JSON报文
-        log.info("{}类型 请求参数：{}", request.getMethod(), JSONUtil.toJsonStr(getNameAndValue(joinPoint)));
+        log.info("===========>>{}类型 请求参数：{}", request.getMethod(), JSONUtil.toJsonStr(getNameAndValue(joinPoint)));
 
     }
 
@@ -104,10 +104,10 @@ public class LogAspect {
         long startTime = (long) hashMapThreadLocal.get().get("startTime");
         // 解析用户浏览器相关信息
         UserAgent userAgent = UserAgentParser.parse(request.getHeader("User-Agent"));
-        log.info("响应结果：{}", JSONUtil.toJsonStr(JSONUtil.toJsonStr(methodResult)));
-        log.info("接口耗时：{} ms", System.currentTimeMillis() - startTime);
-        log.info("调用方IP,OS,BROWSER：{},{},{}", getIp(request), userAgent.getOs().toString(), userAgent.getBrowser().toString());
-        log.info("===========接口调用结束================");
+        log.info("===========>>响应结果：{}", JSONUtil.toJsonStr(JSONUtil.toJsonStr(methodResult)));
+        log.info("===========>>接口耗时：{} ms", System.currentTimeMillis() - startTime);
+        log.info("===========>>调用方IP,OS,BROWSER：{},{},{}", getIp(request), userAgent.getOs().toString(), userAgent.getBrowser().toString());
+        log.info("<<===========接口调用结束==============<<");
     }
 
     @Around("myLog()")
@@ -120,11 +120,11 @@ public class LogAspect {
         ApiOperation annotation = method.getAnnotation(ApiOperation.class);
         long startTime = System.currentTimeMillis();
 
-        log.info("===========接收到新的请求=============");
-        log.info("接口：[{}] ", Objects.isNull(annotation) ? "方法无描述注解" : annotation.value());
-        log.info("接口uri: [{}]", request.getRequestURI());
+        log.info("===========>>接收到新的请求=============>>");
+        log.info("===========>>接口：[{}] ", Objects.isNull(annotation) ? "方法无描述注解" : annotation.value());
+        log.info("===========>>接口uri: [{}]", request.getRequestURI());
         // todo 仅打印JSON报文
-        log.info("{}类型 请求参数：{}", request.getMethod(), JSONUtil.toJsonStr(getNameAndValue(joinPoint)));
+        log.info("===========>>{}类型 请求参数：{}", request.getMethod(), JSONUtil.toJsonStr(getNameAndValue(joinPoint)));
 
         Object methodResult = null;
         try {
@@ -135,10 +135,10 @@ public class LogAspect {
         } finally {
             // 解析用户浏览器相关信息
             UserAgent userAgent = UserAgentParser.parse(request.getHeader("User-Agent"));
-            log.info("响应结果：{}", JSONUtil.toJsonStr(JSONUtil.toJsonStr(methodResult)));
-            log.info("接口耗时：{} ms", System.currentTimeMillis() - startTime);
-            log.info("调用方IP,OS,BROWSER：{},{},{}", getIp(request), userAgent.getOs().toString(), userAgent.getBrowser().toString());
-            log.info("===========接口调用结束================");
+            log.info("===========>>响应结果：{}", JSONUtil.toJsonStr(JSONUtil.toJsonStr(methodResult)));
+            log.info("===========>>接口耗时：{} ms", System.currentTimeMillis() - startTime);
+            log.info("===========>>调用方IP,OS,BROWSER：{},{},{}", getIp(request), userAgent.getOs().toString(), userAgent.getBrowser().toString());
+            log.info("<<===========接口调用结束================<<");
         }
         return methodResult;
     }

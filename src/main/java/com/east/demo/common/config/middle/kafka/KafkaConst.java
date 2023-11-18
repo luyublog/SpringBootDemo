@@ -14,7 +14,17 @@ public class KafkaConst {
     public static final Integer DEFAULT_CONCURRENCY_NUM = 3;
 
     /**
-     * Topic 名称
+     * 第1个Topic名称
      */
     public static final String TOPIC_TEST = "TOPIC_LY_TEST";
+
+    /**
+     * 第2个Topic名称
+     */
+    public static final String TOPIC_TEST_2 = "messages";
+
+    /**
+     * Topic 名称
+     */
+    public static final String GROUP_ID = "spring-boot-demo-group";
 }

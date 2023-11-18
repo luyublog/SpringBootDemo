@@ -35,7 +35,7 @@ public class BaseException extends RuntimeException {
         this.errorEnum = errorEnum;
     }
 
-    public BaseException(ErrorEnum errorEnum, Throwable cause) {
+    public BaseException(ErrorEnum errorEnum, Supplier<String> message, Throwable cause) {
         super(errorEnum.getErrorMsg(), cause);
         this.errorEnum = errorEnum;
     }

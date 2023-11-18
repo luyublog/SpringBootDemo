@@ -2,14 +2,13 @@ package com.east.demo.model.dto.base.resp;
 
 import com.east.demo.common.exception.ErrorEnum;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * Description:
  * Created by east on 2023/8/6 18:09.
  */
 @Data
-@NoArgsConstructor
+//@NoArgsConstructor
 public class BaseResp<T> {
     private String respCode;
     private String respMsg;

@@ -1,6 +1,8 @@
 package com.east.demo.common.config.middle.kafka;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.clients.consumer.Consumer;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -10,6 +12,9 @@ import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.*;
 import org.springframework.kafka.listener.ContainerProperties;
+import org.springframework.kafka.listener.KafkaListenerErrorHandler;
+import org.springframework.kafka.listener.ListenerExecutionFailedException;
+import org.springframework.messaging.Message;
 
 /**
  * kafka配置
@@ -29,6 +34,7 @@ import org.springframework.kafka.listener.ContainerProperties;
 @AllArgsConstructor
 // 配置条件启用
 @ConditionalOnProperty("spring.kafka.enable")
+@Slf4j
 public class KafkaConfig {
     private final KafkaProperties kafkaProperties;
 
@@ -94,6 +100,35 @@ public class KafkaConfig {
         factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL_IMMEDIATE);
         factory.setConcurrency(KafkaConst.DEFAULT_CONCURRENCY_NUM);
         return factory;
+    }
+
+    @Bean(name = "myErrorHandler")
+    public KafkaListenerErrorHandler myErrorHandler() {
+        return new KafkaListenerErrorHandler() {
+            @Override
+            public Object handleError(Message<?> message, ListenerExecutionFailedException exception) {
+                log.info("接收失败 message: {}", message.getPayload());
+                log.error("异常：", exception);
+                return null;
+            }
+
+            /**
+             * Handle the error.
+             *
+             * @param message   the spring-messaging message.
+             * @param exception the exception the listener threw, wrapped in a
+             *                  {@link ListenerExecutionFailedException}.
+             * @param consumer  the consumer.
+             * @return the return value is ignored unless the annotated method has a
+             * {@code @SendTo} annotation.
+             */
+            @Override
+            public Object handleError(Message<?> message, ListenerExecutionFailedException exception, Consumer<?, ?> consumer) {
+                log.info("接收失败 message: {}", message.getPayload());
+                log.error("异常：", exception);
+                return KafkaListenerErrorHandler.super.handleError(message, exception, consumer);
+            }
+        };
     }
 
 }
