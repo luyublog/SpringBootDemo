@@ -21,7 +21,7 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
 @Service
 @Slf4j
 public class KafkaProducerService {
-    @Autowired
+    @Autowired(required = false)
     private KafkaTemplate<String, String> kafkaTemplate;
 
     public void sendMessage(String message, String key, Integer partition) {
