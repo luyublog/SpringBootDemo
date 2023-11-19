@@ -1,6 +1,7 @@
-package com.east.demo.persist.entity;
+package com.east.demo.model.dto.test;
 
 import com.east.demo.common.enums.SexEnum;
+import com.east.demo.persist.entity.LyJobInfo;
 import lombok.*;
 
 import java.io.Serializable;
@@ -15,7 +16,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Builder
 @ToString
-public class LyEmployeeInfo implements Serializable {
+public class LyEmployeeInfoDTO implements Serializable {
     private Long employeeId;
     private String firstName;
     private String lastName;

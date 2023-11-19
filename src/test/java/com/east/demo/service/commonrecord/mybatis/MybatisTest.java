@@ -1,10 +1,11 @@
 package com.east.demo.service.commonrecord.mybatis;
 
-import com.east.demo.persist.entity.LyEmployeeInfo;
+import com.east.demo.model.dto.test.LyEmployeeInfoDTO;
 import com.east.demo.persist.entity.LyJobInfo;
-import com.east.demo.persist.mapper.LyEmployeeInfoMapper;
+import com.east.demo.persist.entity.base.LyEmployeeInfo;
 import com.east.demo.persist.mapper.LyJobInfoMapper;
 import com.east.demo.persist.mapper.LySequenceMapper;
+import com.east.demo.persist.mapper.custom.CustomLyEmployeeInfoMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -50,10 +51,10 @@ class MybatisTest {
     @Test
     public void getNameByString() {
         try (SqlSession sqlSession = this.sqlSessionFactory.openSession(true);) {
-            LyEmployeeInfoMapper userMapper = sqlSession.getMapper(LyEmployeeInfoMapper.class);
-            LyEmployeeInfo userModel = userMapper.getByName("Steven");
+            CustomLyEmployeeInfoMapper userMapper = sqlSession.getMapper(CustomLyEmployeeInfoMapper.class);
+            LyEmployeeInfoDTO userModel = userMapper.getByName("Steven");
             sqlSession.clearCache();
-            LyEmployeeInfo userModel2 = userMapper.getByName("Steven");
+            LyEmployeeInfoDTO userModel2 = userMapper.getByName("Steven");
 
 
             log.info("{}", userModel == userModel2);
@@ -63,11 +64,11 @@ class MybatisTest {
     @Test
     public void getNameByMap() {
         try (SqlSession sqlSession = this.sqlSessionFactory.openSession(true);) {
-            LyEmployeeInfoMapper userMapper = sqlSession.getMapper(LyEmployeeInfoMapper.class);
+            CustomLyEmployeeInfoMapper userMapper = sqlSession.getMapper(CustomLyEmployeeInfoMapper.class);
             Map<String, Object> stringObjectMap = new HashMap<>();
             stringObjectMap.put("firstName", "Steven");
             stringObjectMap.put("lastName", "King");
-            LyEmployeeInfo userModel = userMapper.getByMap(stringObjectMap);
+            LyEmployeeInfoDTO userModel = userMapper.getByMap(stringObjectMap);
             log.info("{}", userModel);
         }
     }
@@ -75,8 +76,8 @@ class MybatisTest {
     @Test
     public void getNameByFullNameTest() {
         try (SqlSession sqlSession = this.sqlSessionFactory.openSession(true);) {
-            LyEmployeeInfoMapper userMapper = sqlSession.getMapper(LyEmployeeInfoMapper.class);
-            LyEmployeeInfo userModel = userMapper.getByFullName("Steven", "King", "AD_PRES");
+            CustomLyEmployeeInfoMapper userMapper = sqlSession.getMapper(CustomLyEmployeeInfoMapper.class);
+            LyEmployeeInfoDTO userModel = userMapper.getByFullName("Steven", "King", "AD_PRES");
             log.info("{}", userModel);
         }
     }
@@ -87,8 +88,8 @@ class MybatisTest {
     @Test
     public void getNameByFullNameTest2() {
         try (SqlSession sqlSession = this.sqlSessionFactory.openSession(true);) {
-            LyEmployeeInfoMapper userMapper = sqlSession.getMapper(LyEmployeeInfoMapper.class);
-            LyEmployeeInfo userModel = userMapper.getByFullName2("Steven", "King", "AD_PRES");
+            CustomLyEmployeeInfoMapper userMapper = sqlSession.getMapper(CustomLyEmployeeInfoMapper.class);
+            LyEmployeeInfoDTO userModel = userMapper.getByFullName2("Steven", "King", "AD_PRES");
             log.info("{}", userModel);
         }
     }
@@ -123,8 +124,8 @@ class MybatisTest {
     @Test
     public void selectInfoByAssociationInXmlTest() {
         try (SqlSession sqlSession = this.sqlSessionFactory.openSession(true);) {
-            LyEmployeeInfoMapper mapper = sqlSession.getMapper(LyEmployeeInfoMapper.class);
-            LyEmployeeInfo info = mapper.getInfoWithJobByFirstName("Steven");
+            CustomLyEmployeeInfoMapper mapper = sqlSession.getMapper(CustomLyEmployeeInfoMapper.class);
+            LyEmployeeInfoDTO info = mapper.getInfoWithJobByFirstName("Steven");
             log.info("{}", info);
         }
     }
@@ -132,8 +133,8 @@ class MybatisTest {
     @Test
     public void getNameBySpecificTest() {
         try (SqlSession sqlSession = this.sqlSessionFactory.openSession(true);) {
-            LyEmployeeInfoMapper userMapper = sqlSession.getMapper(LyEmployeeInfoMapper.class);
-            LyEmployeeInfo userModel = userMapper.getBySpecific(
+            CustomLyEmployeeInfoMapper userMapper = sqlSession.getMapper(CustomLyEmployeeInfoMapper.class);
+            LyEmployeeInfoDTO userModel = userMapper.getBySpecific(
                     "Steven", "King", "", Collections.singletonList("AD_PRES"));
             log.info("{}", userModel);
         }
@@ -149,10 +150,10 @@ class MybatisTest {
     @Test
     public void cacheTest() {
         try (SqlSession sqlSession = this.sqlSessionFactory.openSession(true);) {
-            LyEmployeeInfoMapper userMapper = sqlSession.getMapper(LyEmployeeInfoMapper.class);
-            LyEmployeeInfo userModel = userMapper.getByName("Steven");
+            CustomLyEmployeeInfoMapper userMapper = sqlSession.getMapper(CustomLyEmployeeInfoMapper.class);
+            LyEmployeeInfoDTO userModel = userMapper.getByName("Steven");
 //            sqlSession.clearCache();
-            LyEmployeeInfo userModel2 = userMapper.getByName("Steven");
+            LyEmployeeInfoDTO userModel2 = userMapper.getByName("Steven");
 
 
             log.info("{}", userModel == userModel2);
@@ -166,21 +167,21 @@ class MybatisTest {
      */
     @Test
     public void level2CacheTest() {
-        LyEmployeeInfo userModelList1;
-        LyEmployeeInfo userModelList2;
-        LyEmployeeInfo userModelList3;
+        LyEmployeeInfoDTO userModelList1;
+        LyEmployeeInfoDTO userModelList2;
+        LyEmployeeInfoDTO userModelList3;
         try (SqlSession sqlSession1 = this.sqlSessionFactory.openSession(true);) {
-            LyEmployeeInfoMapper mapper = sqlSession1.getMapper(LyEmployeeInfoMapper.class);
+            CustomLyEmployeeInfoMapper mapper = sqlSession1.getMapper(CustomLyEmployeeInfoMapper.class);
             userModelList1 = mapper.getByName("Steven");
             log.info("{}", userModelList1);
         }
         try (SqlSession sqlSession2 = this.sqlSessionFactory.openSession(true);) {
-            LyEmployeeInfoMapper mapper = sqlSession2.getMapper(LyEmployeeInfoMapper.class);
+            CustomLyEmployeeInfoMapper mapper = sqlSession2.getMapper(CustomLyEmployeeInfoMapper.class);
             userModelList2 = mapper.getByName("Steven");
             log.info("{}", userModelList2);
         }
         try (SqlSession sqlSession2 = this.sqlSessionFactory.openSession(true);) {
-            LyEmployeeInfoMapper mapper = sqlSession2.getMapper(LyEmployeeInfoMapper.class);
+            CustomLyEmployeeInfoMapper mapper = sqlSession2.getMapper(CustomLyEmployeeInfoMapper.class);
             userModelList3 = mapper.getByName("Steven");
             log.info("{}", userModelList3);
         }
@@ -198,6 +199,21 @@ class MybatisTest {
             LyJobInfoMapper mapper = sqlSession.getMapper(LyJobInfoMapper.class);
             LyJobInfo testJob = mapper.getByJobId("TEST_JOB");
             log.info(testJob.toString());
+        }
+    }
+
+    @Test
+    public void customMapperTest() {
+        try (SqlSession sqlSession = this.sqlSessionFactory.openSession(true);) {
+            CustomLyEmployeeInfoMapper userMapper = sqlSession.getMapper(CustomLyEmployeeInfoMapper.class);
+            Map<String, Object> stringObjectMap = new HashMap<>();
+            stringObjectMap.put("firstName", "Steven");
+            stringObjectMap.put("lastName", "King");
+            LyEmployeeInfoDTO userModel = userMapper.getByMap(stringObjectMap);
+            log.info("{}", userModel);
+
+            LyEmployeeInfo lyEmployeeInfo = userMapper.selectByPrimaryKey(100);
+            log.info(lyEmployeeInfo.toString());
         }
     }
 

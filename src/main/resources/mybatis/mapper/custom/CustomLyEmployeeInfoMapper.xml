@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.east.demo.persist.mapper.LyEmployeeInfoMapper">
-
+<mapper namespace="com.east.demo.persist.mapper.custom.CustomLyEmployeeInfoMapper">
     <cache/>
+    <resultMap id="OriginBaseResultMap" extends="com.east.demo.persist.mapper.base.LyEmployeeInfoMapper.BaseResultMap"
+               type="com.east.demo.persist.entity.base.LyEmployeeInfo"/>
 
-    <resultMap id="BaseResultMap" type="com.east.demo.persist.entity.LyEmployeeInfo">
+    <resultMap id="BaseResultMap" type="com.east.demo.model.dto.test.LyEmployeeInfoDTO">
         <id column="EMPLOYEE_ID" javaType="Long" jdbcType="NUMERIC" property="employeeId"/>
         <id column="FIRST_NAME" javaType="String" jdbcType="VARCHAR" property="firstName"/>
         <id column="LAST_NAME" javaType="String" jdbcType="VARCHAR" property="lastName"/>
@@ -16,7 +17,8 @@
         <id column="SEX" javaType="com.east.demo.common.enums.SexEnum" jdbcType="CHAR" property="sex"
             typeHandler="com.east.demo.common.handler.SexEnumTypeHandler"/>
     </resultMap>
-    <resultMap id="BaseResultMapWithJobInfo" type="com.east.demo.persist.entity.LyEmployeeInfo" extends="BaseResultMap">
+    <resultMap id="BaseResultMapWithJobInfo" type="com.east.demo.model.dto.test.LyEmployeeInfoDTO"
+               extends="BaseResultMap">
         <association property="jobInfo" select="com.east.demo.persist.mapper.LyJobInfoMapper.getByJobId"
                      column="{jobId=JOB_ID}"/>
     </resultMap>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!--    参考：https://www.cnblogs.com/f-society/p/11402847.html-->
+    <properties resource="application4mybatisConfig.properties"/>
+    <!-- classPathEntry:数据库的JDBC驱动-->
+    <classPathEntry location="D:\files\others\lib\ojdbc11.jar"/>
+    <context id="default" targetRuntime="MyBatis3">
+
+        <!-- 去掉自动生成的注释-->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <!-- 连接Oracle数据库的各项参数 -->
+        <jdbcConnection driverClass="oracle.jdbc.OracleDriver"
+                        connectionURL="${spring.datasource.url}"
+                        userId="${spring.datasource.username}"
+                        password="${spring.datasource.password}">
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!--生成entity文件的路径-->
+        <javaModelGenerator targetPackage="com.east.demo.persist.entity.base"
+                            targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!--生成mapper文件的路径-->
+        <!--        <javaClientGenerator targetPackage="com.east.demo.persist.mapper.base"-->
+        <!--                         targetProject="src/main/java">-->
+        <!--            <property name="enableSubPackages" value="true"/>-->
+        <!--        </javaClientGenerator>-->
+
+
+        <!--生成mapper.xml文件的路径-->
+        <sqlMapGenerator targetPackage="mybatis.mapper.base"
+                         targetProject="src/main/resources/">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!--生成mapper文件的路径-->
+
+        <javaClientGenerator targetPackage="com.east.demo.persist.mapper.base"
+                             targetProject="src/main/java" type="XMLMAPPER">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+
+        <!--数据库中相关表的名称 这里又不用带scheme了，奇怪-->
+        <table tableName="LY_EMPLOYEE_INFO" domainObjectName="LyEmployeeInfo"
+               enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" selectByExampleQueryId="false">
+        </table>
+    </context>
+</generatorConfiguration>

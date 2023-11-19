@@ -5,8 +5,8 @@ import cn.hutool.json.JSONUtil;
 import com.east.demo.common.enums.StatusEnum;
 import com.east.demo.model.dto.base.resp.BaseResp;
 import com.east.demo.model.dto.serialize.SerializeTestReq;
-import com.east.demo.persist.entity.LyEmployeeInfo;
-import com.east.demo.persist.mapper.LyEmployeeInfoMapper;
+import com.east.demo.model.dto.test.LyEmployeeInfoDTO;
+import com.east.demo.persist.mapper.custom.CustomLyEmployeeInfoMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,11 +21,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class DemoService {
 
     @Autowired
-    LyEmployeeInfoMapper lyEmployeeInfoMapper;
+    CustomLyEmployeeInfoMapper customLyEmployeeInfoMapper;
 
     public BaseResp<JSONObject> demo(JSONObject request) {
         log.info("this is exact service");
-        LyEmployeeInfo userModel = lyEmployeeInfoMapper.getByName("Jack");
+        LyEmployeeInfoDTO userModel = customLyEmployeeInfoMapper.getByName("Jack");
         log.info(userModel.toString());
         return BaseResp.ok(JSONUtil.parseObj(userModel));
     }
@@ -52,8 +52,8 @@ public class DemoService {
 
     @Transactional(rollbackFor = Exception.class)
     public void transactionalAnnotate() {
-        lyEmployeeInfoMapper.updateSexByEmployeeIdInt(100L);
-        LyEmployeeInfo info = lyEmployeeInfoMapper.getByFullName("Steven", "King", "AD_PRES");
+        customLyEmployeeInfoMapper.updateSexByEmployeeIdInt(100L);
+        LyEmployeeInfoDTO info = customLyEmployeeInfoMapper.getByFullName("Steven", "King", "AD_PRES");
         log.info(info.toString());
 //        throw new BaseException(ErrorEnum.FAIL);
     }

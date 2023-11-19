@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.east.demo.persist.mapper.base.LyEmployeeInfoMapper">
+    <resultMap id="BaseResultMap" type="com.east.demo.persist.entity.base.LyEmployeeInfo">
+        <id column="EMPLOYEE_ID" jdbcType="NUMERIC" property="employeeId"/>
+        <result column="FIRST_NAME" jdbcType="VARCHAR" property="firstName"/>
+        <result column="LAST_NAME" jdbcType="VARCHAR" property="lastName"/>
+        <result column="EMAIL" jdbcType="VARCHAR" property="email"/>
+        <result column="PHONE_NUMBER" jdbcType="VARCHAR" property="phoneNumber"/>
+        <result column="HIRE_DATE" jdbcType="TIMESTAMP" property="hireDate"/>
+        <result column="JOB_ID" jdbcType="VARCHAR" property="jobId"/>
+        <result column="SALARY" jdbcType="NUMERIC" property="salary"/>
+        <result column="COMMISSION_PCT" jdbcType="NUMERIC" property="commissionPct"/>
+        <result column="MANAGER_ID" jdbcType="NUMERIC" property="managerId"/>
+        <result column="DEPARTMENT_ID" jdbcType="NUMERIC" property="departmentId"/>
+        <result column="SEX" jdbcType="CHAR" property="sex"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        EMPLOYEE_ID, FIRST_NAME, LAST_NAME, EMAIL, PHONE_NUMBER, HIRE_DATE, JOB_ID, SALARY,
+        COMMISSION_PCT, MANAGER_ID, DEPARTMENT_ID, SEX
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from HR.LY_EMPLOYEE_INFO
+        where EMPLOYEE_ID = #{employeeId,jdbcType=NUMERIC}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from LY_EMPLOYEE_INFO
+        where EMPLOYEE_ID = #{employeeId,jdbcType=NUMERIC}
+    </delete>
+    <insert id="insert" parameterType="com.east.demo.persist.entity.base.LyEmployeeInfo">
+        insert into LY_EMPLOYEE_INFO (EMPLOYEE_ID, FIRST_NAME, LAST_NAME,
+        EMAIL, PHONE_NUMBER, HIRE_DATE,
+        JOB_ID, SALARY, COMMISSION_PCT,
+        MANAGER_ID, DEPARTMENT_ID, SEX
+        )
+        values (#{employeeId,jdbcType=NUMERIC}, #{firstName,jdbcType=VARCHAR}, #{lastName,jdbcType=VARCHAR},
+        #{email,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, #{hireDate,jdbcType=TIMESTAMP},
+        #{jobId,jdbcType=VARCHAR}, #{salary,jdbcType=NUMERIC}, #{commissionPct,jdbcType=NUMERIC},
+        #{managerId,jdbcType=NUMERIC}, #{departmentId,jdbcType=NUMERIC}, #{sex,jdbcType=CHAR}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.east.demo.persist.entity.base.LyEmployeeInfo">
+        insert into LY_EMPLOYEE_INFO
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="employeeId != null">
+                EMPLOYEE_ID,
+            </if>
+            <if test="firstName != null">
+                FIRST_NAME,
+            </if>
+            <if test="lastName != null">
+                LAST_NAME,
+            </if>
+            <if test="email != null">
+                EMAIL,
+            </if>
+            <if test="phoneNumber != null">
+                PHONE_NUMBER,
+            </if>
+            <if test="hireDate != null">
+                HIRE_DATE,
+            </if>
+            <if test="jobId != null">
+                JOB_ID,
+            </if>
+            <if test="salary != null">
+                SALARY,
+            </if>
+            <if test="commissionPct != null">
+                COMMISSION_PCT,
+            </if>
+            <if test="managerId != null">
+                MANAGER_ID,
+            </if>
+            <if test="departmentId != null">
+                DEPARTMENT_ID,
+            </if>
+            <if test="sex != null">
+                SEX,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="employeeId != null">
+                #{employeeId,jdbcType=NUMERIC},
+            </if>
+            <if test="firstName != null">
+                #{firstName,jdbcType=VARCHAR},
+            </if>
+            <if test="lastName != null">
+                #{lastName,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="phoneNumber != null">
+                #{phoneNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="hireDate != null">
+                #{hireDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="jobId != null">
+                #{jobId,jdbcType=VARCHAR},
+            </if>
+            <if test="salary != null">
+                #{salary,jdbcType=NUMERIC},
+            </if>
+            <if test="commissionPct != null">
+                #{commissionPct,jdbcType=NUMERIC},
+            </if>
+            <if test="managerId != null">
+                #{managerId,jdbcType=NUMERIC},
+            </if>
+            <if test="departmentId != null">
+                #{departmentId,jdbcType=NUMERIC},
+            </if>
+            <if test="sex != null">
+                #{sex,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.east.demo.persist.entity.base.LyEmployeeInfo">
+        update LY_EMPLOYEE_INFO
+        <set>
+            <if test="firstName != null">
+                FIRST_NAME = #{firstName,jdbcType=VARCHAR},
+            </if>
+            <if test="lastName != null">
+                LAST_NAME = #{lastName,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                EMAIL = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="phoneNumber != null">
+                PHONE_NUMBER = #{phoneNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="hireDate != null">
+                HIRE_DATE = #{hireDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="jobId != null">
+                JOB_ID = #{jobId,jdbcType=VARCHAR},
+            </if>
+            <if test="salary != null">
+                SALARY = #{salary,jdbcType=NUMERIC},
+            </if>
+            <if test="commissionPct != null">
+                COMMISSION_PCT = #{commissionPct,jdbcType=NUMERIC},
+            </if>
+            <if test="managerId != null">
+                MANAGER_ID = #{managerId,jdbcType=NUMERIC},
+            </if>
+            <if test="departmentId != null">
+                DEPARTMENT_ID = #{departmentId,jdbcType=NUMERIC},
+            </if>
+            <if test="sex != null">
+                SEX = #{sex,jdbcType=CHAR},
+            </if>
+        </set>
+        where EMPLOYEE_ID = #{employeeId,jdbcType=NUMERIC}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.east.demo.persist.entity.base.LyEmployeeInfo">
+        update LY_EMPLOYEE_INFO
+        set FIRST_NAME = #{firstName,jdbcType=VARCHAR},
+        LAST_NAME = #{lastName,jdbcType=VARCHAR},
+        EMAIL = #{email,jdbcType=VARCHAR},
+        PHONE_NUMBER = #{phoneNumber,jdbcType=VARCHAR},
+        HIRE_DATE = #{hireDate,jdbcType=TIMESTAMP},
+        JOB_ID = #{jobId,jdbcType=VARCHAR},
+        SALARY = #{salary,jdbcType=NUMERIC},
+        COMMISSION_PCT = #{commissionPct,jdbcType=NUMERIC},
+        MANAGER_ID = #{managerId,jdbcType=NUMERIC},
+        DEPARTMENT_ID = #{departmentId,jdbcType=NUMERIC},
+        SEX = #{sex,jdbcType=CHAR}
+        where EMPLOYEE_ID = #{employeeId,jdbcType=NUMERIC}
+    </update>
+</mapper>

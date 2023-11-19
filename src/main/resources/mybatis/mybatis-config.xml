@@ -27,11 +27,16 @@
     </environments>
     <!-- 定义映射器 -->
     <mappers>
-        <!--        为什么package就不行呢-->
-        <!--        <package name="mybatis/mapper/"/>-->
-        <mapper resource="mybatis/mapper/LyEmployeeInfoMapper.xml"/>
+        <!--   用package必须保证接口名（例如IUserDao）和xml名（IUserDao.xml）相同，还必须在同一个包中
+        参考：https://www.cnblogs.com/fengfuwanliu/p/10584857.html-->
+        <!--            <package name="mybatis/mapper"/>-->
+        <!--        xml不支持通配符-->
+        <!--        <mapper resource="mybatis/mapper/*/*.xml"/>-->
+        <!--        <mapper resource="mybatis/mapper/*.xml"/>-->
+        <mapper resource="mybatis/mapper/custom/CustomLyEmployeeInfoMapper.xml"/>
+        <mapper resource="mybatis/mapper/base/LyEmployeeInfoMapper.xml"/>
         <mapper resource="mybatis/mapper/LySequenceMapper.xml"/>
-        <mapper resource="mybatis/mapper/LyJobInfoMapper.xml"/>
+        <!--        <mapper resource="mybatis/mapper/LyJobInfoMapper.xml"/>-->
         <!--        <mapper class="LyEmployeeInfoMapper"/>-->
     </mappers>
 </configuration>
