@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = "普通功能的记录")
 @RestController
 @RequestMapping(path = "/common")
-public class v   CommonDemoController {
+public class CommonDemoController {
     @Autowired
     DemoService demoService;
     @Autowired
