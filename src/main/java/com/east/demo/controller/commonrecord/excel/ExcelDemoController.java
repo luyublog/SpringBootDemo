@@ -1,4 +1,4 @@
-package com.east.demo.controller.excel;
+package com.east.demo.controller.commonrecord.excel;
 
 import com.east.demo.service.util.excel.ExcelDemoService;
 import io.swagger.annotations.Api;
