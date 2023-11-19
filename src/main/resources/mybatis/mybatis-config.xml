@@ -35,6 +35,7 @@
         <!--        <mapper resource="mybatis/mapper/*.xml"/>-->
         <mapper resource="mybatis/mapper/custom/CustomLyEmployeeInfoMapper.xml"/>
         <mapper resource="mybatis/mapper/base/LyEmployeeInfoMapper.xml"/>
+        <mapper resource="mybatis/mapper/LyJobInfoMapper.xml"/>
         <mapper resource="mybatis/mapper/LySequenceMapper.xml"/>
         <!--        <mapper resource="mybatis/mapper/LyJobInfoMapper.xml"/>-->
         <!--        <mapper class="LyEmployeeInfoMapper"/>-->

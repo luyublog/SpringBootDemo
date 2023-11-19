@@ -131,7 +131,7 @@
                         <goals>
                             <goal>generate</goal>
                         </goals>
-                        <phase>generate-sources</phase>
+                        <phase>deploy</phase>
                     </execution>
                 </executions>
                 <!--此处必须添加oracle驱动包-->
