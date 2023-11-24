@@ -1,16 +1,18 @@
 package com.east.demo.service.commonrecord.order.interfac;
 
+import com.east.demo.service.commonrecord.order.interfac.req.OrderRequest;
+
 /**
  * 下单行为虚函数
  *
  * @author: east
  * @date: 2023/11/24
  */
-public abstract class AbstractOrder {
-    private final Check check;
-    private final Generate generate;
-    private final Save save;
-    private final AfterOrder afterOrder;
+public abstract class AbstractOrder<T extends OrderRequest> {
+    protected final Check check;
+    protected final Generate generate;
+    protected final Save save;
+    protected final AfterOrder afterOrder;
 
     public AbstractOrder(Check check, Generate generate, Save save, AfterOrder afterOrder) {
         this.check = check;
@@ -22,5 +24,5 @@ public abstract class AbstractOrder {
     /**
      * 下单
      */
-    public abstract void order();
+    public abstract void order(T orderRequest);
 }
