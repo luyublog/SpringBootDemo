@@ -8,18 +8,18 @@ import com.east.demo.service.commonrecord.order.interfac.req.OrderRequest;
  * @author: east
  * @date: 2023/11/23
  */
-public interface Check<T> {
+public interface Check<T extends OrderRequest> {
     /**
      * 基本检查： 常识性逻辑（时间顺序）
      *
      * @param orderRequest req
      */
-    public void commonCheck(OrderRequest<T> orderRequest);
+    public void commonCheck(T orderRequest);
 
     /**
      * 特殊检查： 按不同下单模式来
      *
      * @param orderRequest req
      */
-    public void specialCheck(OrderRequest<T> orderRequest);
+    public void specialCheck(T orderRequest);
 }

@@ -27,16 +27,20 @@ public class InnerOrder extends AbstractOrder<InnerOrderRequest> {
 
     @Override
     public void order(InnerOrderRequest innerOrderRequest) {
-        check.commonCheck(innerOrderRequest);
-        check.specialCheck(innerOrderRequest);
+        try {
+            check.commonCheck(innerOrderRequest);
+            check.specialCheck(innerOrderRequest);
 
-        Supplier<OrderInfo> orderInfoCopier = innerOrderRequest::generateOrderInfo;
-        generate.generateSequence(orderInfoCopier);
-        generate.generateRvcNo(orderInfoCopier);
+            Supplier<OrderInfo> orderInfoCopier = innerOrderRequest::generateOrderInfo;
+            generate.generateSequence(orderInfoCopier);
+            generate.generateRvcNo(orderInfoCopier);
 
-        save.save(orderInfoCopier);
+            save.save(orderInfoCopier);
 
-        afterOrder.after(orderInfoCopier);
+            afterOrder.after(orderInfoCopier);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
