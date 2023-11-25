@@ -22,6 +22,9 @@ public class MyCommandLineRunner implements CommandLineRunner {
      */
     @Override
     public void run(String... args) {
-        log.info("this is MyCommandLineRunner output, param is: {}", args[0]);
+        if (args.length > 0) {
+            // test模式下args为空
+            log.info("this is MyCommandLineRunner output, param is: {}", args[0]);
+        }
     }
 }

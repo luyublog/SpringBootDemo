@@ -3,12 +3,11 @@ package com.east.demo.service.commonrecord.order.imp;
 import com.east.demo.service.commonrecord.order.imp.after.InnerAfterOrderAction;
 import com.east.demo.service.commonrecord.order.imp.check.InnerCheckOrderImp;
 import com.east.demo.service.commonrecord.order.imp.generate.InnerGenerateOrder;
-import com.east.demo.service.commonrecord.order.imp.model.bo.OrderInfo;
+import com.east.demo.service.commonrecord.order.imp.model.bo.InnerNeededSavedInfo;
 import com.east.demo.service.commonrecord.order.imp.model.req.InnerOrderRequest;
 import com.east.demo.service.commonrecord.order.imp.save.InnerSaveOrder;
 import com.east.demo.service.commonrecord.order.interfac.AbstractOrder;
-
-import java.util.function.Supplier;
+import org.springframework.stereotype.Service;
 
 /**
  * 内部下单实现类
@@ -16,13 +15,19 @@ import java.util.function.Supplier;
  * @author: east
  * @date: 2023/11/24
  */
-public class InnerOrder extends AbstractOrder<InnerOrderRequest> {
+@Service
+public class InnerOrder extends AbstractOrder<InnerOrderRequest, InnerNeededSavedInfo> {
+
+    // 对于通配符的对象，需要有明确的类型指定，通常两种（1.这里的直接指定 2.模板中指定） 这里采用模板指定
+    // [参考](https://github.com/luyublog/JavaDemo/blob/main/src/usage/advanced/oop/wildcards/imp/save/InnerSaveOrder.java)
+//    protected final Generate<InnerOrderRequest, InnerNeededSavedInfo> generate;
 
     public InnerOrder(InnerCheckOrderImp check,
                       InnerGenerateOrder generate,
                       InnerSaveOrder save,
                       InnerAfterOrderAction afterOrder) {
         super(check, generate, save, afterOrder);
+        this.generate = generate;
     }
 
     @Override
@@ -31,13 +36,11 @@ public class InnerOrder extends AbstractOrder<InnerOrderRequest> {
             check.commonCheck(innerOrderRequest);
             check.specialCheck(innerOrderRequest);
 
-            Supplier<OrderInfo> orderInfoCopier = innerOrderRequest::generateOrderInfo;
-            generate.generateSequence(orderInfoCopier);
-            generate.generateRvcNo(orderInfoCopier);
+            InnerNeededSavedInfo innerNeededSavedInfo = generate.generate(innerOrderRequest);
 
-            save.save(orderInfoCopier);
+            save.save(innerNeededSavedInfo);
 
-            afterOrder.after(orderInfoCopier);
+            afterOrder.after(() -> innerNeededSavedInfo);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

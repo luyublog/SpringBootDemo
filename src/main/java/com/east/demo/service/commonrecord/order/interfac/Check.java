@@ -1,7 +1,7 @@
 package com.east.demo.service.commonrecord.order.interfac;
 
-import com.east.demo.service.commonrecord.order.imp.model.bo.OrderInfo;
-import com.east.demo.service.commonrecord.order.interfac.req.OrderRequest;
+import com.east.demo.service.commonrecord.order.interfac.model.bo.OrderInfo;
+import com.east.demo.service.commonrecord.order.interfac.model.req.OrderRequest;
 
 /**
  * 预检查

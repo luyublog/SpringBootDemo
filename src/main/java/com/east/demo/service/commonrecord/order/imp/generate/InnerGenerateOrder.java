@@ -1,9 +1,9 @@
 package com.east.demo.service.commonrecord.order.imp.generate;
 
-import com.east.demo.service.commonrecord.order.imp.model.bo.OrderInfo;
+import com.east.demo.service.commonrecord.order.imp.model.bo.InnerNeededSavedInfo;
+import com.east.demo.service.commonrecord.order.imp.model.req.InnerOrderRequest;
 import com.east.demo.service.commonrecord.order.interfac.Generate;
-
-import java.util.function.Supplier;
+import org.springframework.stereotype.Component;
 
 /**
  * 内部渠道生成账单相关信息
@@ -11,14 +11,15 @@ import java.util.function.Supplier;
  * @author: east
  * @date: 2023/11/24
  */
-public class InnerGenerateOrder implements Generate<OrderInfo> {
-    @Override
-    public void generateSequence(Supplier<OrderInfo> neededInfo) {
+@Component
+public class InnerGenerateOrder implements Generate<InnerOrderRequest, InnerNeededSavedInfo> {
 
-    }
 
     @Override
-    public void generateRvcNo(Supplier<OrderInfo> neededInfo) {
+    public InnerNeededSavedInfo generate(InnerOrderRequest neededInfo) {
+        InnerNeededSavedInfo innerNeededSavedInfo = new InnerNeededSavedInfo();
+        System.out.println("内部渠道下单信息开始生成");
 
+        return innerNeededSavedInfo;
     }
 }

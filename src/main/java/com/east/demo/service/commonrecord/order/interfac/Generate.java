@@ -1,28 +1,21 @@
 package com.east.demo.service.commonrecord.order.interfac;
 
-import java.util.function.Supplier;
+import com.east.demo.service.commonrecord.order.interfac.model.bo.NeededSavedInfo;
+import com.east.demo.service.commonrecord.order.interfac.model.req.OrderRequest;
 
 /**
- * 生成相关信息: 账单所需信息
+ * 生成相关信息: 账单信息，统计信息
  *
  * @author: east
  * @date: 2023/11/23
  */
-public interface Generate<T> {
-    /**
-     * 生成队列
-     *
-     * @param neededInfo 必要信息
-     * @return result R
-     */
-    public void generateSequence(Supplier<T> neededInfo);
-
+public interface Generate<T extends OrderRequest<?>, R extends NeededSavedInfo> {
 
     /**
-     * 获取收款信息
-     *
-     * @param neededInfo 必要信息
-     * @return result R
+     * 生成下单的落表数据
+     * @param neededInfo 请求数据
+     * @return result
      */
-    public void generateRvcNo(Supplier<T> neededInfo);
+    public R generate(T neededInfo);
+
 }

@@ -2,6 +2,7 @@ package com.east.demo.service.commonrecord.order.imp.check;
 
 import com.east.demo.service.commonrecord.order.imp.model.req.InnerOrderRequest;
 import com.east.demo.service.commonrecord.order.interfac.Check;
+import org.springframework.stereotype.Component;
 
 /**
  * 账单核对接口
@@ -9,6 +10,7 @@ import com.east.demo.service.commonrecord.order.interfac.Check;
  * @author: east
  * @date: 2023/11/23
  */
+@Component
 public class InnerCheckOrderImp implements Check<InnerOrderRequest> {
     @Override
     public void commonCheck(InnerOrderRequest orderRequest) {

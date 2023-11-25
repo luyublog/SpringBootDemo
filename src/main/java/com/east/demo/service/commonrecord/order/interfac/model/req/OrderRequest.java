@@ -1,6 +1,7 @@
-package com.east.demo.service.commonrecord.order.interfac.req;
+package com.east.demo.service.commonrecord.order.interfac.model.req;
 
-import com.east.demo.service.commonrecord.order.imp.model.bo.OrderInfo;
+
+import com.east.demo.service.commonrecord.order.interfac.model.bo.OrderInfo;
 
 /**
  * @author: east

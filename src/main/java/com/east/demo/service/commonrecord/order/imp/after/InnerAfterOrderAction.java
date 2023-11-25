@@ -1,7 +1,8 @@
 package com.east.demo.service.commonrecord.order.imp.after;
 
-import com.east.demo.service.commonrecord.order.imp.model.bo.OrderInfo;
+import com.east.demo.service.commonrecord.order.imp.model.bo.InnerNeededSavedInfo;
 import com.east.demo.service.commonrecord.order.interfac.AfterOrder;
+import org.springframework.stereotype.Component;
 
 import java.util.function.Supplier;
 
@@ -11,9 +12,10 @@ import java.util.function.Supplier;
  * @author: east
  * @date: 2023/11/24
  */
-public class InnerAfterOrderAction implements AfterOrder<OrderInfo> {
+@Component
+public class InnerAfterOrderAction implements AfterOrder<InnerNeededSavedInfo> {
     @Override
-    public void after(Supplier<OrderInfo> savedInfo) {
-
+    public void after(Supplier<InnerNeededSavedInfo> savedInfo) {
+        System.out.println("内部渠道下单落表后操作");
     }
 }

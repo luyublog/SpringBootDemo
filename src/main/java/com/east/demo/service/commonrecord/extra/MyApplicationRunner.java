@@ -23,6 +23,9 @@ public class MyApplicationRunner implements ApplicationRunner {
      */
     @Override
     public void run(ApplicationArguments args) {
-        log.info("this is MyApplicationRunner output, param is: {}", args.getNonOptionArgs().get(0));
+        if (!args.getNonOptionArgs().isEmpty()) {
+            // test模式下args为空
+            log.info("this is MyApplicationRunner output, param is: {}", args.getNonOptionArgs().get(0));
+        }
     }
 }

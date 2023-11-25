@@ -3,12 +3,11 @@ package com.east.demo.service.commonrecord.order.imp;
 import com.east.demo.service.commonrecord.order.imp.after.OuterAfterOrderAction;
 import com.east.demo.service.commonrecord.order.imp.check.OuterCheckOrderImp;
 import com.east.demo.service.commonrecord.order.imp.generate.OuterGenerateOrder;
-import com.east.demo.service.commonrecord.order.imp.model.bo.OrderInfo;
+import com.east.demo.service.commonrecord.order.imp.model.bo.OuterNeededSavedInfo;
 import com.east.demo.service.commonrecord.order.imp.model.req.OuterOrderRequest;
-import com.east.demo.service.commonrecord.order.imp.save.InnerSaveOrder;
+import com.east.demo.service.commonrecord.order.imp.save.OuterSaveOrder;
 import com.east.demo.service.commonrecord.order.interfac.AbstractOrder;
-
-import java.util.function.Supplier;
+import org.springframework.stereotype.Service;
 
 /**
  * 内部下单实现类
@@ -16,11 +15,12 @@ import java.util.function.Supplier;
  * @author: east
  * @date: 2023/11/24
  */
-public class OuterOrder extends AbstractOrder<OuterOrderRequest> {
+@Service
+public class OuterOrder extends AbstractOrder<OuterOrderRequest, OuterNeededSavedInfo> {
 
     public OuterOrder(OuterCheckOrderImp check,
                       OuterGenerateOrder generate,
-                      InnerSaveOrder save,
+                      OuterSaveOrder save,
                       OuterAfterOrderAction afterOrder) {
         super(check, generate, save, afterOrder);
     }
@@ -30,13 +30,11 @@ public class OuterOrder extends AbstractOrder<OuterOrderRequest> {
         check.commonCheck(outerOrderRequest);
         check.specialCheck(outerOrderRequest);
 
-        Supplier<OrderInfo> orderInfoCopier = outerOrderRequest::generateOrderInfo;
-        generate.generateSequence(orderInfoCopier);
-        generate.generateRvcNo(orderInfoCopier);
+        OuterNeededSavedInfo outerNeededSavedInfo = generate.generate(outerOrderRequest);
 
-        save.save(orderInfoCopier);
+        save.save(outerNeededSavedInfo);
 
-        afterOrder.after(orderInfoCopier);
+        afterOrder.after(() -> outerNeededSavedInfo);
     }
 
 }
