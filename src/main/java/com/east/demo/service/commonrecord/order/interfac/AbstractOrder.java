@@ -8,13 +8,13 @@ import com.east.demo.service.commonrecord.order.interfac.req.OrderRequest;
  * @author: east
  * @date: 2023/11/24
  */
-public abstract class AbstractOrder<T extends OrderRequest> {
-    protected final Check check;
+public abstract class AbstractOrder<T extends OrderRequest<?>> {
+    protected final Check<T> check;
     protected final Generate generate;
     protected final Save save;
     protected final AfterOrder afterOrder;
 
-    public AbstractOrder(Check check, Generate generate, Save save, AfterOrder afterOrder) {
+    public AbstractOrder(Check<T> check, Generate generate, Save save, AfterOrder afterOrder) {
         this.check = check;
         this.generate = generate;
         this.save = save;

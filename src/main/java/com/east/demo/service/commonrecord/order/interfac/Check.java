@@ -1,5 +1,6 @@
 package com.east.demo.service.commonrecord.order.interfac;
 
+import com.east.demo.service.commonrecord.order.imp.model.bo.OrderInfo;
 import com.east.demo.service.commonrecord.order.interfac.req.OrderRequest;
 
 /**
@@ -8,7 +9,7 @@ import com.east.demo.service.commonrecord.order.interfac.req.OrderRequest;
  * @author: east
  * @date: 2023/11/23
  */
-public interface Check<T extends OrderRequest> {
+public interface Check<T extends OrderRequest<? extends OrderInfo>> {
     /**
      * 基本检查： 常识性逻辑（时间顺序）
      *
