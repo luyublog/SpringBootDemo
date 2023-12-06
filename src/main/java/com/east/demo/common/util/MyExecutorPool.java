@@ -75,7 +75,7 @@ public class MyExecutorPool {
     public ExecutorService myJavaDefaultExecutorPool() {
         return new ThreadPoolExecutor(
                 1,
-                1,
+                8,
                 30,
                 TimeUnit.SECONDS,
                 new LinkedBlockingDeque<>(1),

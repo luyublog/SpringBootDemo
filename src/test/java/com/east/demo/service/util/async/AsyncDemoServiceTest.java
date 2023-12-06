@@ -60,4 +60,9 @@ class AsyncDemoServiceTest {
         Thread.sleep(20 * 1000);
         log.info("主线程结束");
     }
+
+    @Test
+    void asyncTransactionalInMultiThread() {
+        asyncDemoService.asyncTransactionalUsage();
+    }
 }

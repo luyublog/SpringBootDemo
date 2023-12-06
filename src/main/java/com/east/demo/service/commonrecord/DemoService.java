@@ -52,7 +52,7 @@ public class DemoService {
 
     @Transactional(rollbackFor = Exception.class)
     public void transactionalAnnotate() {
-        customLyEmployeeInfoMapper.updateSexByEmployeeIdInt(100L);
+        customLyEmployeeInfoMapper.updateSexByEmployeeId(100L, "1");
         LyEmployeeInfoDTO info = customLyEmployeeInfoMapper.getByFullName("Steven", "King", "AD_PRES");
         log.info(info.toString());
 //        throw new BaseException(ErrorEnum.FAIL);

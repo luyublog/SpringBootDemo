@@ -27,9 +27,9 @@
         EMPLOYEE_ID
         ,FIRST_NAME,LAST_NAME,EMAIL,PHONE_NUMBER,SALARY,JOB_ID
     </sql>
-    <update id="updateSexByEmployeeIdInt">
+    <update id="updateSexByEmployeeId">
         update HR.EMPLOYEES
-        set SEX='1'
+        set SEX=#{sexId,jdbcType=CHAR}
         where EMPLOYEE_ID = #{employeeId,jdbcType=INTEGER}
     </update>
 

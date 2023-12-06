@@ -48,5 +48,5 @@ public interface CustomLyEmployeeInfoMapper extends LyEmployeeInfoMapper {
                                     @Param("jobId") String jobId,
                                     @Param("jobIdList") List<String> jobIdList);
 
-    int updateSexByEmployeeIdInt(@Param("employeeId") Long employeeId);
+    int updateSexByEmployeeId(@Param("employeeId") Long employeeId, @Param("sexId") String sexId);
 }
