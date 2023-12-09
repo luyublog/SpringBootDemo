@@ -130,7 +130,7 @@ public class LogAspect {
         try {
             methodResult = joinPoint.proceed();
         } catch (Throwable e) {
-            log.error("接口异常", e);
+//            log.error("接口异常", e);  这里不用重复打印,统一异常拦截会打印
             throw new RuntimeException(e);
         } finally {
             // 解析用户浏览器相关信息

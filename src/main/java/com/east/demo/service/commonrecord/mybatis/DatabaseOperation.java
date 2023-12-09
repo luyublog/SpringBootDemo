@@ -43,4 +43,10 @@ public class DatabaseOperation {
         lyEmployeeInfoDao.updateById(employeeId, sexId);
     }
 
+    @Async(value = "myDefaultExecutorPool")
+    @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
+    public void asyncUpdateByIdWithNewTransactional(Long employeeId, String sexId) {
+        lyEmployeeInfoDao.updateById(employeeId, sexId);
+    }
+
 }

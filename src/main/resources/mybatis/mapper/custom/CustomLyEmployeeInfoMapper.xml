@@ -28,7 +28,7 @@
         ,FIRST_NAME,LAST_NAME,EMAIL,PHONE_NUMBER,SALARY,JOB_ID
     </sql>
     <update id="updateSexByEmployeeId">
-        update HR.EMPLOYEES
+        update HR.LY_EMPLOYEE_INFO
         set SEX=#{sexId,jdbcType=CHAR}
         where EMPLOYEE_ID = #{employeeId,jdbcType=INTEGER}
     </update>
@@ -36,20 +36,20 @@
     <!-- 通过name查询 -->
     <select id="getByName" resultMap="BaseResultMap" flushCache="false">
         SELECT *
-        FROM HR.EMPLOYEES
+        FROM HR.LY_EMPLOYEE_INFO
         WHERE FIRST_NAME = #{value}
           and rownum = 1
     </select>
     <select id="getByMap" resultMap="BaseResultMap">
         SELECT *
-        FROM HR.EMPLOYEES
+        FROM HR.LY_EMPLOYEE_INFO
         WHERE FIRST_NAME = #{firstName,jdbcType=VARCHAR}
           and LAST_NAME = #{lastName,jdbcType=VARCHAR}
           and rownum = 1
     </select>
     <select id="getByFullName" resultMap="BaseResultMap">
         SELECT *
-        FROM HR.EMPLOYEES
+        FROM HR.LY_EMPLOYEE_INFO
         WHERE FIRST_NAME = #{param1,jdbcType=VARCHAR}
           and LAST_NAME = #{param2,jdbcType=VARCHAR}
           and JOB_ID = #{param3,jdbcType=VARCHAR}
@@ -57,7 +57,7 @@
     </select>
     <select id="getByFullName2" resultMap="BaseResultMap">
         SELECT *
-        FROM HR.EMPLOYEES
+        FROM HR.LY_EMPLOYEE_INFO
         WHERE FIRST_NAME = #{firstName,jdbcType=VARCHAR}
           and LAST_NAME = #{lastName,jdbcType=VARCHAR}
           and JOB_ID = #{jobId,jdbcType=CHAR}
@@ -65,14 +65,14 @@
     </select>
     <select id="getInfoWithJobByFirstName" resultMap="BaseResultMapWithJobInfo">
         SELECT *
-        FROM HR.EMPLOYEES
+        FROM HR.LY_EMPLOYEE_INFO
         WHERE FIRST_NAME = #{firstName,jdbcType=VARCHAR}
           and rownum = 1
     </select>
     <select id="getBySpecific" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Sql_Id"/>
-        FROM HR.EMPLOYEES
+        FROM HR.LY_EMPLOYEE_INFO
         <where>
             1=1
             <if test="firstName!=null and firstName.toString()!=''">

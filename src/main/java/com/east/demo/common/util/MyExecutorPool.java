@@ -74,11 +74,11 @@ public class MyExecutorPool {
     @Bean(name = "myDefaultExecutorPool")
     public ExecutorService myJavaDefaultExecutorPool() {
         return new ThreadPoolExecutor(
-                1,
+                3,
                 8,
                 30,
                 TimeUnit.SECONDS,
-                new LinkedBlockingDeque<>(1),
+                new LinkedBlockingDeque<>(Integer.MAX_VALUE),
                 ThreadFactoryBuilder.create().setNamePrefix(threadNamePrefix).build(),
                 new ThreadPoolExecutor.AbortPolicy());
 //        return new ThreadPoolExecutor(
