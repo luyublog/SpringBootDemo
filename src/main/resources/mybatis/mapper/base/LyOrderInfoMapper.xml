@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.east.demo.persist.mapper.base.LyOrderInfoMapper">
+    <resultMap id="BaseResultMap" type="com.east.demo.persist.entity.base.LyOrderInfo">
+        <id column="ORDER_SERIAL" jdbcType="VARCHAR" property="orderSerial"/>
+        <result column="ORDER_AMT" jdbcType="NUMERIC" property="orderAmt"/>
+        <result column="ORDER_RCV_NO" jdbcType="VARCHAR" property="orderRcvNo"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        ORDER_SERIAL, ORDER_AMT, ORDER_RCV_NO
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from LY_ORDER_INFO
+        where ORDER_SERIAL = #{orderSerial,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete
+        from LY_ORDER_INFO
+        where ORDER_SERIAL = #{orderSerial,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.east.demo.persist.entity.base.LyOrderInfo">
+        insert into LY_ORDER_INFO (ORDER_SERIAL, ORDER_AMT, ORDER_RCV_NO)
+        values (#{orderSerial,jdbcType=VARCHAR}, #{orderAmt,jdbcType=NUMERIC}, #{orderRcvNo,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.east.demo.persist.entity.base.LyOrderInfo">
+        insert into LY_ORDER_INFO
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderSerial != null">
+                ORDER_SERIAL,
+            </if>
+            <if test="orderAmt != null">
+                ORDER_AMT,
+            </if>
+            <if test="orderRcvNo != null">
+                ORDER_RCV_NO,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderSerial != null">
+                #{orderSerial,jdbcType=VARCHAR},
+            </if>
+            <if test="orderAmt != null">
+                #{orderAmt,jdbcType=NUMERIC},
+            </if>
+            <if test="orderRcvNo != null">
+                #{orderRcvNo,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.east.demo.persist.entity.base.LyOrderInfo">
+        update LY_ORDER_INFO
+        <set>
+            <if test="orderAmt != null">
+                ORDER_AMT = #{orderAmt,jdbcType=NUMERIC},
+            </if>
+            <if test="orderRcvNo != null">
+                ORDER_RCV_NO = #{orderRcvNo,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ORDER_SERIAL = #{orderSerial,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.east.demo.persist.entity.base.LyOrderInfo">
+        update LY_ORDER_INFO
+        set ORDER_AMT    = #{orderAmt,jdbcType=NUMERIC},
+            ORDER_RCV_NO = #{orderRcvNo,jdbcType=VARCHAR}
+        where ORDER_SERIAL = #{orderSerial,jdbcType=VARCHAR}
+    </update>
+</mapper>

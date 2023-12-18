@@ -55,7 +55,7 @@
 
 
         <!--数据库中相关表的名称 这里又不用带scheme了，奇怪-->
-        <table tableName="LY_EMPLOYEE_INFO" domainObjectName="LyEmployeeInfo"
+        <table tableName="LY_ORDER_INFO" domainObjectName="LyOrderInfo"
                enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" selectByExampleQueryId="false">
         </table>

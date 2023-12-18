@@ -1,7 +1,9 @@
 package com.east.demo.service.commonrecord.batch.db;
 
 import com.east.demo.persist.entity.base.LyEmployeeInfo;
+import com.east.demo.persist.entity.base.LyOrderInfo;
 import com.east.demo.persist.mapper.custom.CustomLyEmployeeInfoMapper;
+import com.east.demo.persist.mapper.custom.CustomLyOrderInfoMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
@@ -57,18 +59,28 @@ public class DbBatchOperation {
     /**
      * todo 测试在大数量下时，openSession为Batch模式下如果要获取每笔结果该怎么优化
      *
-     * @param lyEmployeeInfoList
+     * flushStatements 和commit区别：flushStatements只是执行，不会真正提交
+     *
+     * @param lyOrderInfoList infoList
      */
-    public void batchInsert(List<LyEmployeeInfo> lyEmployeeInfoList) {
-        for (LyEmployeeInfo lyEmployeeInfo : lyEmployeeInfoList) {
-            try {
-                customLyEmployeeInfoMapper.insert(lyEmployeeInfo);
-            } catch (DuplicateKeyException duplicateKeyException) {
-                log.info("重复数据,id:{}", lyEmployeeInfo.getEmployeeId());
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+    public void batchInsert(List<LyOrderInfo> lyOrderInfoList) {
+        long start = System.currentTimeMillis();
+        // note 开了BATCH后，必须commit, 否则等于没提交不生效
+        try (SqlSession sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH, true)) {
+            CustomLyOrderInfoMapper batchMapper = sqlSession.getMapper(CustomLyOrderInfoMapper.class);
+            for (LyOrderInfo lyOrderInfo : lyOrderInfoList) {
+                try {
+                    batchMapper.insert(lyOrderInfo);
+                    sqlSession.commit();
+                } catch (DuplicateKeyException duplicateKeyException) {
+                    log.error("重复数据,id:{}", lyOrderInfo.getOrderSerial());
+                } catch (Exception e) {
+                    log.error("未知异常,id:{}", lyOrderInfo.getOrderSerial());
+//                    throw new RuntimeException(e);
+                }
             }
         }
+        log.info("本次插入数据{}条，共耗时{}ms", lyOrderInfoList.size(), System.currentTimeMillis() - start);
 
     }
 

@@ -1,7 +1,6 @@
 package com.east.demo.service.commonrecord.order.interfac.model.bo;
 
 
-import com.east.demo.persist.entity.base.LyEmployeeInfo;
 import lombok.Data;
 
 /**
@@ -15,5 +14,5 @@ import lombok.Data;
 
 @Data
 public class NeededSavedInfo {
-    protected LyEmployeeInfo orderInfo;
+
 }

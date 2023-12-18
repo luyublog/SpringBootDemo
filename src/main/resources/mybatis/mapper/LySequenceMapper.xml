@@ -10,4 +10,11 @@
         select ${sequenceName}.nextval
         from dual
     </select>
+    <select id="selectSequenceByNameAndSize" resultType="java.lang.Long">
+        select ${sequenceName}.nextval
+        from dual
+        connect by LEVEL <![CDATA[
+        <=
+        ]]> #{size}
+    </select>
 </mapper>

@@ -16,7 +16,7 @@ import java.util.Objects;
  * @author: east
  * @date: 2023/12/6
  */
-@Service  // note 这里作为service？？
+@Service
 @Slf4j
 public class LyEmployeeInfoDao {
     private final CustomLyEmployeeInfoMapper customLyEmployeeInfoMapper;

@@ -1,5 +1,6 @@
 package com.east.demo.service.commonrecord.order.imp;
 
+import com.east.demo.persist.entity.base.LyOrderInfo;
 import com.east.demo.service.commonrecord.order.interfac.AfterOrder;
 import com.east.demo.service.commonrecord.order.interfac.Check;
 import com.east.demo.service.commonrecord.order.interfac.Generate;
@@ -7,10 +8,16 @@ import com.east.demo.service.commonrecord.order.interfac.Save;
 import com.east.demo.service.commonrecord.order.interfac.model.bo.NeededSavedInfo;
 import com.east.demo.service.commonrecord.order.interfac.model.bo.OrderInfo;
 import com.east.demo.service.commonrecord.order.interfac.model.req.OrderRequest;
+import com.east.demo.service.util.common.CommonUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.function.Supplier;
 
 /**
@@ -25,6 +32,13 @@ import java.util.function.Supplier;
 public class SpecialOrder implements Check<OrderRequest<OrderInfo>>,
         Generate<OrderRequest<OrderInfo>, NeededSavedInfo>,
         Save<NeededSavedInfo>, AfterOrder<NeededSavedInfo> {
+    private final CommonUtil commonUtil;
+
+    @Autowired
+    public SpecialOrder(CommonUtil commonUtil) {
+        this.commonUtil = commonUtil;
+    }
+
     @Override
     public void after(Supplier<NeededSavedInfo> savedInfo) {
 
@@ -48,5 +62,32 @@ public class SpecialOrder implements Check<OrderRequest<OrderInfo>>,
     @Override
     public void save(NeededSavedInfo savedInfo) {
 
+    }
+
+    /**
+     * 生成1k笔order信息
+     * 暂时放这里
+     *
+     * @return info
+     */
+    public List<LyOrderInfo> generateInfoList(Integer size) {
+        if (size < 1) {
+            return new ArrayList<>();
+        }
+        LinkedBlockingQueue<Long> sequences = commonUtil.getSequences("HR.LY_SEQ", size);
+        ArrayList<LyOrderInfo> lyOrderInfoList = new ArrayList<>(size);
+
+        int i = 1;
+        while (i <= size) {
+            // 生成订单数据
+            LyOrderInfo lyOrderInfo = new LyOrderInfo();
+            lyOrderInfo.setOrderSerial(commonUtil.tranSequenceToFormatString("LYOR", sequences.poll()));
+            lyOrderInfo.setOrderAmt(BigDecimal.TEN);
+            lyOrderInfo.setOrderRcvNo("1234567890");
+            lyOrderInfoList.add(lyOrderInfo);
+            // i自增
+            i++;
+        }
+        return lyOrderInfoList;
     }
 }
