@@ -23,6 +23,13 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 public class KafkaMessageHandler {
+
+    /**
+     * TODO 测试kafka如果不ack，该消费者会不会卡住
+     *
+     * @param record
+     * @param acknowledgment
+     */
     @KafkaListener(topics = KafkaConst.TOPIC_TEST, containerFactory = "ackContainerFactory")
     public void handleMessage(ConsumerRecord<String, String> record, Acknowledgment acknowledgment) {
         try {
