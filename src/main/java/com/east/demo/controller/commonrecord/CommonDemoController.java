@@ -6,6 +6,7 @@ import com.east.demo.common.annotation.SpeicalAspectAnnotation;
 import com.east.demo.model.dto.base.resp.BaseResp;
 import com.east.demo.model.dto.serialize.SerializeTestReq;
 import com.east.demo.service.commonrecord.DemoService;
+import com.east.demo.service.commonrecord.order.imp.SpecialOrder;
 import com.east.demo.service.middle.kafka.KafkaProducerService;
 import com.east.demo.service.util.async.AsyncDemoService;
 import io.swagger.annotations.Api;
@@ -26,15 +27,17 @@ public class CommonDemoController {
     private final DemoService demoService;
     private final KafkaProducerService kafkaProducerService;
     private final AsyncDemoService asyncDemoService;
+    private final SpecialOrder specialOrder;
 
     @Autowired
     public CommonDemoController(DemoService demoService,
                                 KafkaProducerService kafkaProducerService,
-                                AsyncDemoService asyncDemoService) {
+                                AsyncDemoService asyncDemoService, SpecialOrder specialOrder) {
         Assert.isTrue(demoService != null);
         this.demoService = demoService;
         this.kafkaProducerService = kafkaProducerService;
         this.asyncDemoService = asyncDemoService;
+        this.specialOrder = specialOrder;
     }
 
 

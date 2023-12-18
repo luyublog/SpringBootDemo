@@ -13,10 +13,11 @@ import com.east.demo.service.commonrecord.order.interfac.model.req.OrderRequest;
  * @date: 2023/11/24
  */
 public abstract class AbstractOrder<T extends OrderRequest<?>, R extends NeededSavedInfo> {
-    protected Check<T> check;
-    //    protected Generate<T, ? extends NeededSavedInfo> generate;
+    //    直接用通配符会报错
+//    protected Generate<T, ? extends NeededSavedInfo> generate;
 //    protected Save<? extends NeededSavedInfo> save;
 //    protected AfterOrder<? extends NeededSavedInfo> afterOrder;
+    protected Check<T> check;
     protected Generate<T, R> generate;
     protected Save<R> save;
     protected AfterOrder<R> afterOrder;
