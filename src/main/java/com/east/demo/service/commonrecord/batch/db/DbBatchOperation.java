@@ -1,8 +1,7 @@
 package com.east.demo.service.commonrecord.batch.db;
 
-import com.east.demo.persist.entity.base.LyEmployeeInfo;
+import cn.hutool.core.collection.CollUtil;
 import com.east.demo.persist.entity.base.LyOrderInfo;
-import com.east.demo.persist.mapper.custom.CustomLyEmployeeInfoMapper;
 import com.east.demo.persist.mapper.custom.CustomLyOrderInfoMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.ExecutorType;
@@ -25,10 +24,15 @@ import java.util.function.BiFunction;
 @Service
 @Slf4j
 public class DbBatchOperation {
+    private final SqlSessionFactory sqlSessionFactory;
+    private final CustomLyOrderInfoMapper customLyOrderInfoMapper;
+
     @Autowired
-    SqlSessionFactory sqlSessionFactory;
-    @Autowired
-    CustomLyEmployeeInfoMapper customLyEmployeeInfoMapper;
+    public DbBatchOperation(SqlSessionFactory sqlSessionFactory, CustomLyOrderInfoMapper customLyOrderInfoMapper) {
+        this.sqlSessionFactory = sqlSessionFactory;
+        this.customLyOrderInfoMapper = customLyOrderInfoMapper;
+    }
+
 
     public <T> int insertBatch(List<T> infoList, BiFunction<SqlSession, T, Integer> function) {
         int batchSize = 1000;
@@ -57,13 +61,26 @@ public class DbBatchOperation {
     }
 
     /**
-     * todo 测试在大数量下时，openSession为Batch模式下如果要获取每笔结果该怎么优化
+     * 测试在大数量下时，openSession为Batch模式下如果要获取每笔结果该怎么优化
+     * <p>
+     * flushStatements 和commit区别：flushStatements只是执行，不会真正提交。commit是提交（会先执行flushStatements再提交）
      *
-     * flushStatements 和commit区别：flushStatements只是执行，不会真正提交
+     * 看起来是快速和获取每笔的结果不可兼得啊
      *
      * @param lyOrderInfoList infoList
      */
     public void batchInsert(List<LyOrderInfo> lyOrderInfoList) {
+        batchInsert2(lyOrderInfoList);
+    }
+
+    /**
+     * 开启批量模式，简单commit
+     * 好处：可以立刻获得每条执行结果
+     * 坏处：非常慢
+     *
+     * @param lyOrderInfoList info
+     */
+    private void batchInsert1(List<LyOrderInfo> lyOrderInfoList) {
         long start = System.currentTimeMillis();
         // note 开了BATCH后，必须commit, 否则等于没提交不生效
         try (SqlSession sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH, true)) {
@@ -76,22 +93,81 @@ public class DbBatchOperation {
                     log.error("重复数据,id:{}", lyOrderInfo.getOrderSerial());
                 } catch (Exception e) {
                     log.error("未知异常,id:{}", lyOrderInfo.getOrderSerial());
-//                    throw new RuntimeException(e);
+                    // 这里异常不管
+                    // throw new RuntimeException(e);
                 }
             }
         }
         log.info("本次插入数据{}条，共耗时{}ms", lyOrderInfoList.size(), System.currentTimeMillis() - start);
+    }
 
+    /**
+     * 开启批量模式，500条执行一次，最后commit
+     * 好处：非常快
+     * 坏处：无法获得每条sql执行结果
+     *
+     * @param lyOrderInfoList info
+     */
+    private void batchInsert2(List<LyOrderInfo> lyOrderInfoList) {
+        long start = System.currentTimeMillis();
+        int batchSize = 500;
+        int i = 0;
+        // note 开了BATCH后，必须commit, 否则等于没提交不生效
+        try (SqlSession sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH, true)) {
+            CustomLyOrderInfoMapper batchMapper = sqlSession.getMapper(CustomLyOrderInfoMapper.class);
+            for (LyOrderInfo lyOrderInfo : lyOrderInfoList) {
+                if (i++ % batchSize == 0) {
+                    sqlSession.flushStatements();
+                }
+                batchMapper.insert(lyOrderInfo);
+            }
+            sqlSession.commit();
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            throw e;
+        }
+        log.info("本次插入数据{}条，共耗时{}ms", lyOrderInfoList.size(), System.currentTimeMillis() - start);
     }
 
     /**
      * todo 测试大数据情况下，for循环更新，批量case when，update by select三种哪种更新效率更高
      *
-     * @param lyEmployeeInfoList
+     * @param lyOrderInfoList orderList
      */
-    public void batchUpdate(List<LyEmployeeInfo> lyEmployeeInfoList) {
-        for (LyEmployeeInfo lyEmployeeInfo : lyEmployeeInfoList) {
-//            customLyEmployeeInfoMapper.updateSexById(lyEmployeeInfo);
+    public void batchUpdate(List<LyOrderInfo> lyOrderInfoList) {
+        log.info("开始更新");
+        long start = System.currentTimeMillis();
+        updateByMergeInto(lyOrderInfoList);
+        log.info("更新{}笔，耗时{}ms", lyOrderInfoList.size(), System.currentTimeMillis() - start);
+    }
+
+    /**
+     * 简单for循环更新
+     * @param lyOrderInfoList info
+     */
+    private void simpleUpdate(List<LyOrderInfo> lyOrderInfoList) {
+        for (LyOrderInfo lyOrderInfo : lyOrderInfoList) {
+            customLyOrderInfoMapper.updateByPrimaryKey(lyOrderInfo);
         }
+    }
+
+    /**
+     * 通过case when
+     *
+     * @param lyOrderInfoList info
+     */
+    private void updateByCaseWhen(List<LyOrderInfo> lyOrderInfoList) {
+        List<List<LyOrderInfo>> splitInfo = CollUtil.split(lyOrderInfoList, 1000);
+        splitInfo.forEach(customLyOrderInfoMapper::updateRvcNoBySerialList);
+    }
+
+    /**
+     * 通过merge into
+     *
+     * @param lyOrderInfoList info
+     */
+    private void updateByMergeInto(List<LyOrderInfo> lyOrderInfoList) {
+        List<List<LyOrderInfo>> splitInfo = CollUtil.split(lyOrderInfoList, 1000);
+        splitInfo.forEach(customLyOrderInfoMapper::updateRvcNoByOtherTable);
     }
 }

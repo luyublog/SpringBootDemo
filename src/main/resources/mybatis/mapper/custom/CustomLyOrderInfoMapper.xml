@@ -3,11 +3,45 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.east.demo.persist.mapper.custom.CustomLyOrderInfoMapper">
     <!--    <cache/>-->
-    <resultMap id="OriginBaseResultMap" extends="com.east.demo.persist.mapper.base.LyOrderInfoMapper.BaseResultMap"
+    <resultMap id="BaseResultMap" extends="com.east.demo.persist.mapper.base.LyOrderInfoMapper.BaseResultMap"
                type="com.east.demo.persist.entity.base.LyOrderInfo"/>
 
     <sql id="Base_Column_List">
         <include refid="com.east.demo.persist.mapper.base.LyOrderInfoMapper.Base_Column_List"/>
     </sql>
+    <update id="updateRvcNoBySerial" parameterType="com.east.demo.persist.entity.LyJobInfo">
+        update LY_ORDER_INFO
+        set ORDER_RCV_NO=#{orderRcvNo,jdbcType=VARCHAR}
+        where ORDER_SERIAL = #{orderSerial,jdbcType=VARCHAR}
+    </update>
+    <update id="updateRvcNoBySerialList">
+        update LY_ORDER_INFO
+        set ORDER_RCV_NO =
+        <foreach collection="lyOrderInfoList" item="orderInfo" open="case">
+            when ORDER_SERIAL=#{orderInfo.orderSerial,jdbcType=VARCHAR} then #{orderInfo.orderRcvNo,jdbcType=VARCHAR}
+        </foreach>
+        where ORDER_SERIAL in
+        <foreach collection="lyOrderInfoList" open="(" item="orderInfo" separator="," close=")">
+            #{orderInfo.orderSerial,jdbcType=VARCHAR}
+        </foreach>
+    </update>
+    <update id="updateRvcNoByOtherTable">
+        merge into LY_ORDER_INFO a
+        using LY_EMPLOYEE_INFO b
+        on (a.ORDER_AMT=b.EMPLOYEE_ID and a.ORDER_SERIAL in
+        <foreach collection="lyOrderInfoList" open="(" item="orderInfo" separator="," close=")">
+            #{orderInfo.orderSerial,jdbcType=VARCHAR}
+        </foreach>)
+        when matched then
+        update set a.ORDER_RCV_NO=b.PHONE_NUMBER
+    </update>
+    <select id="getAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from LY_ORDER_INFO
+        where ROWNUM <![CDATA[
+        <=
+        ]]> #{size}
+    </select>
 
 </mapper>
