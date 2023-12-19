@@ -102,6 +102,11 @@ public class KafkaConfig {
         return factory;
     }
 
+    /**
+     * 自定义消费者出现异常处理情况
+     *
+     * @return handler
+     */
     @Bean(name = "myErrorHandler")
     public KafkaListenerErrorHandler myErrorHandler() {
         return new KafkaListenerErrorHandler() {

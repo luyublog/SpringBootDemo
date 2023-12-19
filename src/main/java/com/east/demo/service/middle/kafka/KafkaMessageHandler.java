@@ -25,10 +25,10 @@ import org.springframework.stereotype.Service;
 public class KafkaMessageHandler {
 
     /**
-     * TODO 测试kafka如果不ack，该消费者会不会卡住
+     * 测试kafka如果不ack，该消费者会不会卡住。不会卡住。如果后续消费ack了那么这条就会跳过, offset就会拉到最新
      *
-     * @param record
-     * @param acknowledgment
+     * @param record record
+     * @param acknowledgment ack
      */
     @KafkaListener(topics = KafkaConst.TOPIC_TEST, containerFactory = "ackContainerFactory")
     public void handleMessage(ConsumerRecord<String, String> record, Acknowledgment acknowledgment) {
