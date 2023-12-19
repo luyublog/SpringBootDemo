@@ -36,12 +36,20 @@ public class KafkaMessageHandler {
             String key = record.key();
             String message = record.value();
 
+            // 异常测试
+            if ("error flag".equals(message)) {
+                throw new BaseException(ErrorEnum.FAIL);
+            }
+
             log.info("消息接收成功：[{}] \t topic: [{}] \t partition: [{}] \t leader epoch: [{}] \t key: [{}] \t offset: [{}]",
                     message, record.topic(), record.partition(), record.leaderEpoch().get(),
                     key, record.offset());
             log.info(record.headers().toArray().toString());
             acknowledgment.acknowledge();
         } catch (Exception e) {
+            log.info("消息接收失败：[{}] \t topic: [{}] \t partition: [{}] \t leader epoch: [{}] \t key: [{}] \t offset: [{}]",
+                    record.value(), record.topic(), record.partition(), record.leaderEpoch().get(),
+                    record.key(), record.offset());
             log.error(e.getMessage(), e);
         }
     }
