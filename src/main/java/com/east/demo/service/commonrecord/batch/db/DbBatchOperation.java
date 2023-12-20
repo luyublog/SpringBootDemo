@@ -130,7 +130,9 @@ public class DbBatchOperation {
     }
 
     /**
-     * todo 测试大数据情况下，for循环更新，批量case when，update by select三种哪种更新效率更高
+     * 测试大数据情况下，for循环更新，批量case when，update by select三种哪种更新效率更高
+     * 时间上case when ≈ update by select < for
+     * 从执行计划上看，不用连表的case when更优（索引什么都一样的情况下）
      *
      * @param lyOrderInfoList orderList
      */

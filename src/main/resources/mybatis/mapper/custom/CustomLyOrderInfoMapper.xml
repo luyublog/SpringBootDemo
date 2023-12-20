@@ -17,7 +17,7 @@
     <update id="updateRvcNoBySerialList">
         update LY_ORDER_INFO
         set ORDER_RCV_NO =
-        <foreach collection="lyOrderInfoList" item="orderInfo" open="case">
+        <foreach collection="lyOrderInfoList" item="orderInfo" open="case" close="end">
             when ORDER_SERIAL=#{orderInfo.orderSerial,jdbcType=VARCHAR} then #{orderInfo.orderRcvNo,jdbcType=VARCHAR}
         </foreach>
         where ORDER_SERIAL in

@@ -30,7 +30,7 @@ class DbBatchOperationTest {
 
     @Test
     void batchUpdate() {
-        List<LyOrderInfo> all = customLyOrderInfoMapper.getAll(1);
+        List<LyOrderInfo> all = customLyOrderInfoMapper.getAll(1000);
         dbBatchOperation.batchUpdate(all);
     }
 }
