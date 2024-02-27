@@ -3,6 +3,7 @@ package com.east.demo.persist.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Map;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
@@ -22,12 +23,12 @@ public interface LySequenceMapper {
     Long selectSequence();
 
     /**
-     * 获取指定队列名称的队列值
+     * 获取指定序列名称的队列值
      */
     Long selectSequenceByName(@Param("sequenceName") String sequenceName);
 
     /**
-     * todo 测试下这里用toChar对队列进行转换后对速度的影响
+     * 批量获取序列值
      *
      * @param sequenceName 队列名称
      * @param size         数量
@@ -35,4 +36,6 @@ public interface LySequenceMapper {
      */
     LinkedBlockingQueue<Long> selectSequenceByNameAndSize(@Param("sequenceName") String sequenceName,
                                                           @Param("size") Integer size);
+
+    void addSequence(@Param("sequenceName") String sequenceName, @Param("msg") Map<String, Object> msg);
 }
