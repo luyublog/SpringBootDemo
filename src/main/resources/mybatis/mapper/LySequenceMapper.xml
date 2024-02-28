@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.east.demo.persist.mapper.LySequenceMapper">
-    <insert id="addSequence">
+    <insert id="addSequence" statementType="CALLABLE">
         call HR.ADD_SEQ(#{sequenceName,jdbcType=VARCHAR,mode=IN}, #{num,jdbcType=VARCHAR,mode=OUT},
                         #{msg,jdbcType=VARCHAR,mode=OUT})
     </insert>

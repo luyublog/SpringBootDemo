@@ -37,5 +37,5 @@ public interface LySequenceMapper {
     LinkedBlockingQueue<Long> selectSequenceByNameAndSize(@Param("sequenceName") String sequenceName,
                                                           @Param("size") Integer size);
 
-    void addSequence(@Param("sequenceName") String sequenceName, @Param("msg") Map<String, Object> msg);
+    void addSequence(Map<String, Object> param);
 }

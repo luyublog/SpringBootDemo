@@ -34,9 +34,10 @@ public class SequenceUtil {
      * @param sequenceName 序列名称
      */
     public void addSequence(String sequenceName) {
-        Map<String, Object> msg = new HashMap<>();
-        lySequenceMapper.addSequence(sequenceName, msg);
-        log.info((String) msg.get("msg"));
+        Map<String, Object> param = new HashMap<>();
+        param.put("sequenceName", sequenceName);
+        lySequenceMapper.addSequence(param);
+        log.info((String) param.get("msg"));
     }
 
     /**
