@@ -97,6 +97,12 @@
         <!--            <groupId>org.springframework.session</groupId>-->
         <!--            <artifactId>spring-session-data-redis</artifactId>-->
         <!--        </dependency>-->
+        <!--        对象存储sdk-->
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-s3</artifactId>
+            <version>1.11.415</version>
+        </dependency>
     </dependencies>
 
 

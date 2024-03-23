@@ -2,6 +2,11 @@ package com.east.demo.service.util.common;
 
 import cn.hutool.core.util.StrUtil;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 /**
  * 通用工具类
  *
@@ -65,4 +70,27 @@ public class CommonUtil {
         // 返回5位字符，多了截取前五位，少了用第一个字符替代
         return StrUtil.padPre(result, 5, CHARS_SOURCE_RANDOM.charAt(0));
     }
+
+
+    public static void saveFile(InputStream inputStream, String fileName) {
+        // 确保提供的文件名不为空且InputStream不为空
+        if (inputStream == null || fileName == null || fileName.isEmpty()) {
+            System.out.println("Invalid input stream or file name.");
+            return;
+        }
+
+        // 使用try-with-resources确保资源被正确关闭
+        try (OutputStream outputStream = new FileOutputStream(fileName)) {
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+            // 从InputStream读取数据，并写入到输出文件
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+            System.out.println("File has been saved successfully.");
+        } catch (IOException e) {
+            System.err.println("An error occurred while saving the File: " + e.getMessage());
+        }
+    }
+
 }
