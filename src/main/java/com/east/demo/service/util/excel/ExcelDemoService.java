@@ -1,17 +1,20 @@
 package com.east.demo.service.util.excel;
 
 import cn.hutool.core.io.resource.ClassPathResource;
+import cn.hutool.poi.excel.ExcelUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 /**
@@ -85,5 +88,22 @@ public class ExcelDemoService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * 读取excel内容将其转为base64字符串
+     */
+    public void excelToBase64() {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+        String path = "demo.xlsx";
+
+        try {
+            ExcelUtil.getReader(path).getWorkbook().write(byteArrayOutputStream);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        System.out.println(Base64.getEncoder().encodeToString(byteArrayOutputStream.toByteArray()));
     }
 }
